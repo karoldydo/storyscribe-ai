@@ -1,0 +1,8 @@
+dist
+node_modules
+
+docker/pdf/*
+!docker/pdf/.gitkeep
+
+docker/videos/*
+!docker/videos/.gitkeep

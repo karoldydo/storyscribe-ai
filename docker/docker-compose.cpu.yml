@@ -1,0 +1,44 @@
+name: storyscribe-ai
+
+networks:
+  storyscribe-ai-network:
+    driver: bridge
+
+volumes:
+  ollama:
+    driver: local
+
+services:
+  ollama:
+    container_name: ollama-service
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile.ollama
+    ports:
+      - '11434:11434'
+    networks:
+      - storyscribe-ai-network
+    volumes:
+      - ollama:/root/.ollama
+
+  whisper:
+    container_name: whisper-service
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile.whisper
+    ports:
+      - '3000:3000'
+    networks:
+      - storyscribe-ai-network
+    volumes:
+      - ./pdf:/pdf
+      - ./prompts:/prompts
+      - ./videos:/videos
+
+  pdf:
+    container_name: pdf-service
+    image: spawnia/md-to-pdf:latest
+    ports:
+      - '8000:8000'
+    networks:
+      - storyscribe-ai-network

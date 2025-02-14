@@ -1,0 +1,55 @@
+{
+  "name": "storyscribe-ai",
+  "version": "0.1.0",
+  "description": "A proof-of-concept that uses Whisper for video transcription, passes the transcript to Ollama to generate a well-formatted Markdown summary, and then converts the summary into a PDF document.",
+  "keywords": [
+    "whisper",
+    "ollama",
+    "openai"
+  ],
+  "homepage": "https://github.com/karoldydo/storyscribe-ai#readme",
+  "bugs": {
+    "url": "https://github.com/karoldydo/storyscribe-ai/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karoldydo/storyscribe-ai.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Karol Dydo",
+    "url": "https://karoldydo.dev"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint --fix",
+    "pre-commit": "lint-staged",
+    "prepare": "husky",
+    "prettier": "prettier --write .",
+    "start": "npm run build && node dist/index.js",
+    "watch": "tsup --watch"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "csso": "^5.0.5",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@types/csso": "^5.0.4",
+    "@types/node": "^22.13.1",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-perfectionist": "^4.8.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier-plugin-packagejson": "^2.5.8",
+    "prettier-plugin-sort-json": "^4.1.1",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.23.0"
+  }
+}

@@ -1,0 +1,27 @@
+FROM python:3.9-slim
+
+# set environment variables
+ENV FLASK_APP=main.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=3000
+ENV FLASK_DEBUG=True
+
+# install system dependencies
+RUN apt-get update && \
+    apt-get install -y ffmpeg git && \
+    rm -rf /var/lib/apt/lists/*
+
+# copy and install python dependencies
+COPY ../../server/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# set the working directory
+WORKDIR /app
+
+# copy application code
+COPY ../../server/main.py .
+
+# expose and run
+EXPOSE 3000
+CMD ["flask", "run"]
+

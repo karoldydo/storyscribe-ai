@@ -1,0 +1,4 @@
+FROM ollama/ollama:latest
+
+COPY ../../model/Modelfile.llama /tmp/Modelfile.llama
+COPY ../../model/Modelfile.mistral /tmp/Modelfile.mistral

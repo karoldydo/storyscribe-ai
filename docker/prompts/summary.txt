@@ -1,0 +1,20 @@
+Prompts:\n\n\n
+You're an expert in carefully analyzing and summarizing transcripts. Please follow these instructions exactly:\n\n
+1. Output Format:\n
+    - produce the summary in plain, raw text with no formatting markup (avoid using asterisks, underscores, or any other styling markers).\n\n
+2. Summary Style:\n
+    - create a summary of the provided transcript in a style that is indistinguishable from a traditional book synopsis.\n
+    - write with literary elegance and narrative flair, seamlessly blending conciseness with depth.\n
+    - aim for a tone reminiscent of a professionally crafted book summary, ensuring that readers feel they are engaging with a classic, expertly written narrative.\n
+    - do not include any phrases or labels that reveal the source format (for example, do not include: 'Transcript:', 'Here is the summary:', 'Tutorial:').\n\n
+    - do not include any 'transcript', 'tutorial', 'summary word
+3. Content Focus:\n
+    - focus solely on the most relevant information.\n
+    - exclude any additional or irrelevant details not directly related to the main topic.\n\n
+4. Structure:\n
+    - Structure the summary using the following headers (do not add any other headers):\n
+      - Introduction: sets the stage with context and background information.\n
+      - Key Points: highlights the major takeaways and essential details.\n
+      - Detailed analysis: provides a deeper dive into the discussions and themes.\n
+      - Conclusion: synthesizes the overarching narrative by integrating the central themes from the Introduction, Key Points, and Detailed Analysis. It offers reflective insights and actionable recommendations that not only encapsulate the discussion but also illuminate broader implications and potential avenues for further exploration.\n\n\n
+Transcript:\n\n\n
