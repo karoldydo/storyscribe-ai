@@ -1,0 +1,43 @@
+{
+  "name": "@storyscribe-ai/client",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "ng build",
+    "lint": "eslint --config ./eslint.config.mjs --fix",
+    "ng": "ng",
+    "prettier": "prettier --write . --cache --cache-location=../../node_modules/.cache/prettier",
+    "start": "ng serve",
+    "test": "ng test",
+    "watch": "ng build --watch --configuration development"
+  },
+  "dependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/compiler": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/forms": "^19.2.0",
+    "@angular/platform-browser": "^19.2.0",
+    "@angular/platform-browser-dynamic": "^19.2.0",
+    "@angular/router": "^19.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.13",
+    "@angular/cli": "^19.2.13",
+    "@angular/compiler-cli": "^19.2.0",
+    "@types/jasmine": "~5.1.0",
+    "angular-eslint": "19.4.0",
+    "eslint": "^9.26.0",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "8.32.0"
+  },
+  "packageManager": "yarn@4.9.1"
+}

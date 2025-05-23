@@ -1,6 +1,5 @@
 .husky
 .idea
-.vscode
 .yarn
 dist
 node_modules

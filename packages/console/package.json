@@ -1,30 +1,12 @@
 {
   "name": "@storyscribe-ai/console",
   "version": "0.1.0",
-  "description": "A proof-of-concept that uses Whisper for video transcription, passes the transcript to Ollama to generate a well-formatted Markdown summary, and then converts the summary into a PDF document.",
-  "keywords": [
-    "whisper",
-    "ollama",
-    "openai"
-  ],
-  "homepage": "https://github.com/karoldydo/storyscribe-ai#readme",
-  "bugs": {
-    "url": "https://github.com/karoldydo/storyscribe-ai/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/karoldydo/storyscribe-ai.git"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Karol Dydo",
-    "url": "https://karoldydo.dev"
-  },
+  "private": true,
   "type": "module",
   "main": "../../dist/console/index.js",
   "scripts": {
     "build": "tsup",
-    "lint": "eslint --config eslint.config.mjs --fix",
+    "lint": "eslint --config ./eslint.config.mjs --fix",
     "prettier": "prettier --write . --cache --cache-location=../../node_modules/.cache/prettier",
     "start": "tsup && node ../../dist/console/index.js",
     "watch": "tsup --watch"

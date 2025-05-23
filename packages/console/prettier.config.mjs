@@ -1,7 +1,3 @@
-export default {
-  jsonRecursiveSort: true,
-  plugins: ['prettier-plugin-packagejson', 'prettier-plugin-sort-json'],
-  printWidth: 120,
-  singleQuote: true,
-  trailingComma: 'es5',
-};
+import baseConfig from '../../prettier.config.mjs';
+
+export default { ...baseConfig };

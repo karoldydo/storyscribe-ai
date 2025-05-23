@@ -1,9 +1,12 @@
 {
   "*.{ts,mjs}": [
     "yarn workspace @storyscribe-ai/console prettier",
-    "yarn workspace @storyscribe-ai/console lint"
+    "yarn workspace @storyscribe-ai/client prettier",
+    "yarn workspace @storyscribe-ai/console lint",
+    "yarn workspace @storyscribe-ai/client lint"
   ],
   "*.{html,scss,css,json}": [
-    "yarn workspace @storyscribe-ai/console prettier"
+    "yarn workspace @storyscribe-ai/console prettier",
+    "yarn workspace @storyscribe-ai/client prettier"
   ],
 }
