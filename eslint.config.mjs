@@ -1,13 +1,14 @@
 // @ts-check
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
+import tseslint from 'typescript-eslint';
 
 export default [
   ...tseslint.config({
-    files: ['**/*.ts'],
     extends: [eslint.configs.recommended, ...tseslint.configs.recommended, ...tseslint.configs.stylistic],
+    files: ['**/*.ts', '**/*.mjs'],
+    ignores: ['.husky', '.idea', '.vscode', '.yarn', 'dist', 'node_modules'],
     plugins: { perfectionist },
     rules: {
       'perfectionist/sort-array-includes': ['error'],

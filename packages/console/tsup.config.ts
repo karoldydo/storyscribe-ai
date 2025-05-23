@@ -5,6 +5,7 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm'],
   minify: true,
+  outDir: '../../dist/console',
   platform: 'node',
   sourcemap: true,
   target: 'esnext',

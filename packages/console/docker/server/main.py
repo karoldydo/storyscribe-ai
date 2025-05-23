@@ -36,9 +36,10 @@ def transcribe():
 
     # check if file exists
     if not os.path.exists(file_path):
-        return jsonify(
-            {"error": f"File '{file_name}' not found in /videos directory."}
-        ), 400
+        return (
+            jsonify({"error": f"File '{file_name}' not found in /videos directory."}),
+            400,
+        )
 
     try:
         # run whisper command
@@ -105,9 +106,10 @@ def summarize():
             base_prompt = "".join(buffer.read().splitlines())
     except Exception as error:
         app.logger.error(f"Could not read summary prompt file: {error}")
-        return jsonify(
-            {"error": f"Could not read summary prompt file: {str(error)}"}
-        ), 500
+        return (
+            jsonify({"error": f"Could not read summary prompt file: {str(error)}"}),
+            500,
+        )
 
     app.logger.info(f"base_prompt: {base_prompt}")
 
@@ -139,9 +141,10 @@ def summarize():
         return jsonify(response_data), 200
     except Exception as error:
         app.logger.error(f"Summarization failed due to error: {error}")
-        return jsonify(
-            {"error": f"Summarization failed due to error: {str(error)}"}
-        ), 500
+        return (
+            jsonify({"error": f"Summarization failed due to error: {str(error)}"}),
+            500,
+        )
 
 
 @app.route("/markdown", methods=["POST"])
@@ -163,9 +166,10 @@ def markdown():
             base_prompt = "".join(buffer.read().splitlines())
     except Exception as error:
         app.logger.error(f"Could not read markdown prompt file: {error}")
-        return jsonify(
-            {"error": f"Could not read markdown prompt file: {str(error)}"}
-        ), 500
+        return (
+            jsonify({"error": f"Could not read markdown prompt file: {str(error)}"}),
+            500,
+        )
 
     app.logger.info(f"base_prompt: {base_prompt}")
     app.logger.info(f"summary: {summary}")
@@ -198,9 +202,12 @@ def markdown():
         return jsonify(response_data), 200
     except Exception as error:
         app.logger.error(f"Markdown generation failed due to error: {error}")
-        return jsonify(
-            {"error": f"Markdown generation failed due to error: {str(error)}"}
-        ), 500
+        return (
+            jsonify(
+                {"error": f"Markdown generation failed due to error: {str(error)}"}
+            ),
+            500,
+        )
 
 
 @app.route("/pdf", methods=["POST"])
@@ -223,9 +230,10 @@ def md_to_pdf():
         )
 
         if response.status_code != 200:
-            return jsonify(
-                {"error": "External conversion service returned an error"}
-            ), 500
+            return (
+                jsonify({"error": "External conversion service returned an error"}),
+                500,
+            )
 
         # create output directory
         output_dir = "/pdf"

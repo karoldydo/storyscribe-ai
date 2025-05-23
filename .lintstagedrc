@@ -1,3 +1,9 @@
 {
-  "*.{ts}": ["prettier --write", "eslint --fix"]
+  "*.{ts,mjs}": [
+    "yarn workspace @storyscribe-ai/console prettier",
+    "yarn workspace @storyscribe-ai/console lint"
+  ],
+  "*.{html,scss,css,json}": [
+    "yarn workspace @storyscribe-ai/console prettier"
+  ],
 }

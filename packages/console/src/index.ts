@@ -22,4 +22,4 @@ async function main() {
   logSuccess(`Entire process completed in ${toSeconds(Date.now() - processStart)}`);
 }
 
-main();
+void main();

@@ -1,8 +1,17 @@
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+.idea
+
 dist
 node_modules
 
-docker/pdf/*
-!docker/pdf/.gitkeep
+packages/console/docker/pdf/*
+!packages/console/docker/pdf/.gitkeep
 
-docker/videos/*
-!docker/videos/.gitkeep
+packages/console/docker/videos/*
+!packages/console/docker/videos/.gitkeep

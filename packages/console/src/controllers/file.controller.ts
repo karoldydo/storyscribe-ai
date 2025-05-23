@@ -4,7 +4,9 @@ import { getListFiles } from '../services';
 import { __dirname, logInfo } from '../utils';
 
 async function listFiles(): Promise<string[]> {
-  const directoryPath = path.join(__dirname, '..', 'docker', 'videos');
+  const directoryPath = path.join(__dirname, '..', '..', 'packages', 'console', 'docker', 'videos');
+
+  console.log('directoryPath', directoryPath);
 
   logInfo(`Starting search for video files in the "${directoryPath}" directory`);
 
