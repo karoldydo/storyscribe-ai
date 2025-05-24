@@ -12,7 +12,7 @@ import { __dirname, axios, AxiosError, AxiosResponse, logSuccess } from '../util
  * @param markdown formatted markdown string
  */
 async function convertMarkdownToPdf(markdown: string): Promise<void> {
-  const cssPath = path.join(__dirname, '..', '..', 'packages', 'console', 'docker', 'css', 'style.css');
+  const cssPath = path.join(__dirname, '..', '..', 'packages', 'docker', 'console', 'css', 'style.css');
 
   const css = fs.existsSync(cssPath) ? minify(fs.readFileSync(cssPath, 'utf-8')).css : '';
 
@@ -25,7 +25,7 @@ async function convertMarkdownToPdf(markdown: string): Promise<void> {
       markdown,
     });
 
-    logSuccess(`PDF file: ${path.join(__dirname, '..', '..', 'packages', 'console', 'docker', pdf_path)}`);
+    logSuccess(`PDF file: ${path.join(__dirname, '..', '..', 'packages', 'docker', 'console', pdf_path)}`);
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error('PDF generation failed', { cause: error.toJSON() });

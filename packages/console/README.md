@@ -2,24 +2,24 @@
 
 ## Process Overview
 
-1. After startup, the application searches for video files within the [videos](./docker/videos) directory and its subdirectories.
+1. After startup, the application searches for video files within the [packages/docker/console/videos](../docker/console/videos) directory and its subdirectories.
 2. The application then transcribes the audio from each video file.
 3. Each transcript is sent to the ollama service, which generates a summary.
 4. The summary is converted into a Markdown document.
-5. Finally, the Markdown document is transformed into a pdf and saved in the [pdf](./docker/pdf) directory.
+5. Finally, the Markdown document is transformed into a pdf and saved in the [packages/docker/console/pdf](../docker/console/pdf) directory.
 
 ## Project Structure
 
-- [/docker/build](./docker/build): contains the Dockerfile
-- [/docker/css](./docker/css): CSS file for the pdf (edit `style.css` to customize the pdf output)
-- [/docker/model](./docker/model): model files for ollama (for more details, check the [ollama documentation](https://github.com/ollama/ollama/blob/main/docs/modelfile.md))
+- [packages/docker/console/build](../docker/console/build): contains the Dockerfile
+- [packages/docker/console/css](../docker/console/css): CSS file for the pdf (edit `style.css` to customize the pdf output)
+- [packages/docker/console/model](../docker/console/model): model files for ollama (for more details, check the [ollama documentation](https://github.com/ollama/ollama/blob/main/docs/modelfile.md))
 
   > **Note:** Not all models support Modelfile creation. Please refer to the ollama documentation for the list of currently supported model architectures and further details.
 
-- [/docker/pdf](./docker/pdf): generated pdf files
-- [/docker/prompts](./docker/prompts): prompts for ollama (edit `summary.txt` or `markdown.txt` to customize the output)
-- [/docker/server](./docker/server): server code for whisper, ollama, and the pdf generator
-- [/docker/videos](./docker/videos): video files to be processed
+- [packages/docker/console/pdf](../docker/console/pdf): generated pdf files
+- [packages/docker/console/prompts](../docker/console/prompts): prompts for ollama (edit `summary.txt` or `markdown.txt` to customize the output)
+- [packages/docker/console/server](../docker/console/server): server code for whisper, ollama, and the pdf generator
+- [packages/docker/console/videos](../docker/console/videos): video files to be processed
 
 Rest of the files are for the Node.js application that orchestrates the process.
 
@@ -42,7 +42,7 @@ Rest of the files are for the Node.js application that orchestrates the process.
 
 ### Using only CPU
 
-1. Navigate to [docker](./docker) folder, and run the following command to pull and start the services
+1. Navigate to [packages/docker/console](../docker/console) folder, and run the following command to pull and start the services
 
    ```shell
    docker compose --file docker-compose.cpu.yml up -d
@@ -68,7 +68,7 @@ Rest of the files are for the Node.js application that orchestrates the process.
 
      > **Note:** The `mistral` used in the command is a custom name
 
-3. Copy the video file or files you want to process to the [videos](./docker/videos) folder
+3. Copy the video file or files you want to process to the [packages/docker/console/videos](../docker/console/videos) folder
 
 ## Start application
 

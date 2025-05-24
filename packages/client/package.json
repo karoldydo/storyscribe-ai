@@ -6,7 +6,7 @@
     "build": "ng build",
     "lint": "eslint --config ./eslint.config.mjs --fix",
     "ng": "ng",
-    "prettier": "prettier --write . --cache --cache-location=../../node_modules/.cache/prettier",
+    "prettier": "prettier --write . --cache --cache-location=../../node_modules/.cache/client/prettier",
     "start": "ng serve",
     "test": "ng test",
     "watch": "ng build --watch --configuration development"

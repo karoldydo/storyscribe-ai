@@ -48,10 +48,10 @@ Thumbs.db
 !.yarn/versions
 
 # Console
-packages/console/docker/pdf/*
-!packages/console/docker/pdf/.gitkeep
-packages/console/docker/videos/*
-!packages/console/docker/videos/.gitkeep
+packages/docker/console/pdf/*
+!packages/docker/console/pdf/.gitkeep
+packages/docker/console/videos/*
+!packages/docker/console/videos/.gitkeep
 packages/console/node_modules
 
 # Client

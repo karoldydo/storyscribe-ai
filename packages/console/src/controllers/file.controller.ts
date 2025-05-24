@@ -4,7 +4,7 @@ import { getListFiles } from '../services';
 import { __dirname, logInfo } from '../utils';
 
 async function listFiles(): Promise<string[]> {
-  const directoryPath = path.join(__dirname, '..', '..', 'packages', 'console', 'docker', 'videos');
+  const directoryPath = path.join(__dirname, '..', '..', 'packages', 'docker', 'console', 'videos');
 
   console.log('directoryPath', directoryPath);
 

@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint --config ./eslint.config.mjs --fix",
-    "prettier": "prettier --write . --cache --cache-location=../../node_modules/.cache/prettier",
+    "prettier": "prettier --write . --cache --cache-location=../../node_modules/.cache/console/prettier",
     "start": "tsup && node ../../dist/console/index.js",
     "watch": "tsup --watch"
   },
