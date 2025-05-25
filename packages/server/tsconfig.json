@@ -1,6 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -11,8 +13,7 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
-    "outDir": "../../dist/console/out-tsc",
-    "rootDir": "./",
+    "outDir": "../../dist/server/out-tsc",
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext"

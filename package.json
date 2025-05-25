@@ -39,7 +39,12 @@
     "console:prettier": "yarn workspace @storyscribe-ai/console prettier",
     "console:start": "yarn workspace @storyscribe-ai/console start",
     "pre-commit": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "server:build": "yarn workspace @storyscribe-ai/server build",
+    "server:lint": "yarn workspace @storyscribe-ai/server lint",
+    "server:prettier": "yarn workspace @storyscribe-ai/server prettier",
+    "server:start": "yarn workspace @storyscribe-ai/server start",
+    "server:watch": "yarn workspace @storyscribe-ai/server watch"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
