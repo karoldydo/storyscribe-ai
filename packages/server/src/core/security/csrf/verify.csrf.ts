@@ -5,7 +5,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import logger from '../../logger';
 
 export const verifyCsrf = (request: Request, response: Response, next: NextFunction) => {
-  const csrf = request.app.get('csrf') as csrf;
+  const csrf = request.app.get('csrf') as csrf; // get csrf instance from app
   const secret = request.cookies['XSRF-SECRET'];
   const token = request.cookies['XSRF-TOKEN'];
 

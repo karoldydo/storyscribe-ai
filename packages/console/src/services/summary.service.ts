@@ -1,5 +1,6 @@
+import { SummaryRequest, SummaryResponse } from '@storyscribe-ai/model/types';
+
 import { OLLAMA_SUMMARY_MODEL } from '../config';
-import { SummaryRequest, SummaryResponse } from '../model';
 import { logInfo, logSuccess, toSeconds } from '../utils';
 import { axios, AxiosError, AxiosResponse } from '../utils';
 

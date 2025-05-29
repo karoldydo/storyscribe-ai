@@ -1,9 +1,9 @@
+import { PdfRequest, PdfResponse } from '@storyscribe-ai/model/types';
 import { minify } from 'csso';
 import fs from 'fs';
 import path from 'path';
 
 import { PDF_ENGINE } from '../config';
-import { PdfRequest, PdfResponse } from '../model';
 import { __dirname, axios, AxiosError, AxiosResponse, logSuccess } from '../utils';
 
 /**

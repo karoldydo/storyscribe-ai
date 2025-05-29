@@ -1,7 +1,7 @@
+import { TranscriptionRequest, TranscriptionResponse } from '@storyscribe-ai/model/types';
 import path from 'path';
 
 import { WHISPER_LANGUAGE, WHISPER_MODEL } from '../config';
-import { TranscriptionRequest, TranscriptionResponse } from '../model';
 import { logInfo, logSuccess, toSeconds } from '../utils';
 import { axios, AxiosError, AxiosResponse } from '../utils';
 

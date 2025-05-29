@@ -20,8 +20,6 @@
     "name": "Karol Dydo",
     "url": "https://karoldydo.dev"
   },
-  "type": "module",
-  "main": "dist/index.js",
   "directories": {
     "packages": "packages"
   },

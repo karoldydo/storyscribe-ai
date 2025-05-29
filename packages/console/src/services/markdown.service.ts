@@ -1,5 +1,6 @@
+import { MarkdownRequest, MarkdownResponse } from '@storyscribe-ai/model/types';
+
 import { OLLAMA_MARKDOWN_MODEL } from '../config';
-import { MarkdownRequest, MarkdownResponse } from '../model';
 import { logInfo, logSuccess, toSeconds } from '../utils';
 import { axios, AxiosError, AxiosResponse } from '../utils';
 

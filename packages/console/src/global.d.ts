@@ -1,4 +1,4 @@
-import { PdfRequest, TranscriptionRequest } from './model';
+import { PdfRequest, TranscriptionRequest } from '@storyscribe-ai/model/types';
 
 declare global {
   namespace NodeJS {
