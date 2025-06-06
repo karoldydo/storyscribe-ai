@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-export const SummaryRequestSchema = z.object({
+export const SummaryServiceRequestSchema = z.object({
   model: z.string(),
   transcript: z.string(),
 });
 
-export const SummaryResponseSchema = z.object({
+export const SummaryServiceResponseSchema = z.object({
   context: z.array(z.number()),
   created_at: z.string(),
   done: z.boolean(),

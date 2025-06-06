@@ -1,33 +1,35 @@
-import { TranscriptionRequest, TranscriptionResponse } from '@storyscribe-ai/model/types';
+import { TranscriptionServiceRequest, TranscriptionServiceResponse } from '@storyscribe-ai/model/types';
 import { AxiosResponse } from 'axios';
 import { Worker } from 'bullmq';
 
 import { whisperService } from '../core/axios';
 import logger from '../core/logger';
 import { redisOptions } from '../core/redis';
-import { TranscriptionService } from '../services';
+import { MovieService, TranscriptionService } from '../services';
 
 const transcriptionWorker = () => {
   const transcriptionService = new TranscriptionService();
+  const movieService = new MovieService();
 
-  const worker = new Worker<TranscriptionRequest>(
+  const worker = new Worker(
     'transcription',
     async (job) => {
       if (job && job.id) {
-        const { data: body, id } = job;
+        const { id } = job;
 
-        await transcriptionService.update(id, undefined, 'in-progress');
+        const { movieId } = await transcriptionService.update({ id, status: 'in-progress' });
+        const { filename } = await movieService.getOne({ id: movieId });
         logger.info(`[WORKER] Transcription job ${id} started.`);
 
         const {
-          data: { transcript },
+          data: { transcript: content },
         } = await whisperService.post<
-          TranscriptionResponse,
-          AxiosResponse<TranscriptionResponse>,
-          TranscriptionRequest
-        >('/transcribe', body);
+          TranscriptionServiceResponse,
+          AxiosResponse<TranscriptionServiceResponse>,
+          TranscriptionServiceRequest
+        >('/transcribe', { file_name: filename });
 
-        await transcriptionService.update(id, transcript);
+        await transcriptionService.update({ content, id });
       }
     },
     { concurrency: 1, connection: redisOptions }
@@ -36,7 +38,7 @@ const transcriptionWorker = () => {
   worker.on('completed', async (job) => {
     if (job && job.id) {
       const { id } = job;
-      transcriptionService.update(id, undefined, 'completed').then(() => {
+      transcriptionService.update({ id, status: 'completed' }).then(() => {
         logger.info(`[WORKER] Transcription job ${id} completed successfully.`);
       });
     }
@@ -45,8 +47,9 @@ const transcriptionWorker = () => {
   worker.on('failed', async (job, error) => {
     if (job && job.id) {
       const { id } = job;
-      await transcriptionService.update(id, undefined, 'failed');
-      logger.error(`[WORKER] Transcription job ${id} failed: ${JSON.stringify(error, null, 2)}`);
+      await transcriptionService.update({ id, status: 'failed' }).then(() => {
+        logger.error(`[WORKER] Transcription job ${id} failed: ${JSON.stringify(error, null, 2)}`);
+      });
     }
   });
 };

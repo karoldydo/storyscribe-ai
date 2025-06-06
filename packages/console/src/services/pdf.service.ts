@@ -1,4 +1,4 @@
-import { PdfRequest, PdfResponse } from '@storyscribe-ai/model/types';
+import { PdfServiceRequest, PdfServiceResponse } from '@storyscribe-ai/model/types';
 import { minify } from 'csso';
 import fs from 'fs';
 import path from 'path';
@@ -19,7 +19,7 @@ async function convertMarkdownToPdf(markdown: string): Promise<void> {
   try {
     const {
       data: { pdf_path },
-    } = await axios.post<PdfResponse, AxiosResponse<PdfResponse>, PdfRequest>('/pdf', {
+    } = await axios.post<PdfServiceResponse, AxiosResponse<PdfServiceResponse>, PdfServiceRequest>('/pdf', {
       css,
       engine: PDF_ENGINE,
       markdown,

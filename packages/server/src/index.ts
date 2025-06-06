@@ -7,7 +7,9 @@ import { PORT } from './core/env';
 import logger from './core/logger';
 import { corsMiddleware, csrfMiddleware, helmetMiddleware } from './core/middlewares';
 import { initializeCsrf } from './core/security/csrf';
+import { swagger, swaggerSpecification } from './core/swagger';
 import { transcriptionRouter } from './routes';
+import { movieRouter } from './routes/movie.route';
 import { transcriptionWorker } from './workers';
 
 dotevnv.config();
@@ -29,6 +31,8 @@ index.use(corsMiddleware());
 index.disable('x-powered-by');
 
 // routes
+index.use('/api/docs', swagger.serve, swagger.setup(swaggerSpecification));
+index.use('/api/v1/movie', movieRouter);
 index.use('/api/v1/transcribe', transcriptionRouter);
 
 index.listen(PORT, async () => {

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { PdfRequestSchema, PdfResponseSchema } from '../schemas';
+import { PdfServiceRequestSchema, PdfServiceResponseSchema } from '../schemas';
 
-export type PdfRequest = z.infer<typeof PdfRequestSchema>;
-export type PdfResponse = z.infer<typeof PdfResponseSchema>;
+export type PdfServiceRequest = z.infer<typeof PdfServiceRequestSchema>;
+export type PdfServiceResponse = z.infer<typeof PdfServiceResponseSchema>;

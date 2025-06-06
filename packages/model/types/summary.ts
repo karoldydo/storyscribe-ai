@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { SummaryRequestSchema, SummaryResponseSchema } from '../schemas';
+import { SummaryServiceRequestSchema, SummaryServiceResponseSchema } from '../schemas';
 
-export type SummaryRequest = z.infer<typeof SummaryRequestSchema>;
-export type SummaryResponse = z.infer<typeof SummaryResponseSchema>;
+export type SummaryServiceRequest = z.infer<typeof SummaryServiceRequestSchema>;
+export type SummaryServiceResponse = z.infer<typeof SummaryServiceResponseSchema>;

@@ -1,6 +1,9 @@
 import { z } from 'zod';
+import { extendZodWithOpenApi } from 'zod-openapi';
 
-export const TranscriptionRequestSchema = z.object({
+extendZodWithOpenApi(z);
+
+export const TranscriptionServiceRequestSchema = z.object({
   file_name: z.string(),
   language: z.string().optional(),
   model: z
@@ -19,6 +22,69 @@ export const TranscriptionRequestSchema = z.object({
     .optional(),
 });
 
-export const TranscriptionResponseSchema = z.object({
+export const TranscriptionServiceResponseSchema = z.object({
   transcript: z.string(),
 });
+
+export const TranscriptionApiCreateRequestSchema = z
+  .object({
+    movieId: z.string().openapi({
+      description: 'The id of the movie associated with the transcription',
+      example: '12345678-1234-1234-1234-123456789012',
+    }),
+  })
+  .openapi({ title: 'TranscriptionApiCreateRequestSchema' });
+
+export const TranscriptionApiUpdateRequestSchema = z
+  .object({
+    content: z.string().optional().openapi({
+      description: 'The content of the transcription, if available',
+      example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+    }),
+    id: z.string().openapi({
+      description: 'The unique identifier of the transcription',
+      example: '96cf5041-0b56-4e87-bbec-ec5421aa8bfe',
+    }),
+    movieId: z.string().optional().openapi({
+      description: 'The id of the movie associated with the transcription',
+      example: '12345678-1234-1234-1234-123456789012',
+    }),
+    status: z
+      .union([z.literal('completed'), z.literal('failed'), z.literal('in-progress'), z.literal('pending')])
+      .openapi({
+        description: 'The status of the transcription job',
+        example: 'completed',
+      }),
+  })
+  .openapi({ title: 'TranscriptionApiUpdateRequestSchema' });
+
+export const TranscriptionApiResponseSchema = z
+  .object({
+    content: z.string().optional().openapi({
+      description: 'The transcript content, if available',
+      example: 'null',
+    }),
+    created: z.string().datetime().openapi({
+      description: 'ISO timestamp when the transcription was created',
+      example: '2024-06-03T18:25:43.511Z',
+    }),
+    id: z.string().openapi({
+      description: 'Unique transcription UUID',
+      example: '96cf5041-0b56-4e87-bbec-ec5421aa8bfe',
+    }),
+    modified: z.string().datetime().openapi({
+      description: 'ISO timestamp when the transcription was last modified',
+      example: '2024-06-03T19:00:00.000Z',
+    }),
+    movieId: z.string().openapi({
+      description: 'The id of the movie associated with the transcription',
+      example: '12345678-1234-1234-1234-123456789012',
+    }),
+    status: z
+      .union([z.literal('completed'), z.literal('failed'), z.literal('in-progress'), z.literal('pending')])
+      .openapi({
+        description: 'The status of the transcription job',
+        example: 'completed',
+      }),
+  })
+  .openapi({ title: 'TranscriptionApiResponseSchema' });

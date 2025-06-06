@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-export const MarkdownRequestSchema = z.object({
+export const MarkdownServiceRequestSchema = z.object({
   model: z.string(),
   summary: z.string(),
 });
 
-export const MarkdownResponseSchema = z.object({
+export const MarkdownServiceResponseSchema = z.object({
   context: z.array(z.number()),
   created_at: z.string(),
   done: z.boolean(),

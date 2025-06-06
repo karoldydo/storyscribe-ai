@@ -1,4 +1,4 @@
-import { MarkdownRequest, MarkdownResponse } from '@storyscribe-ai/model/types';
+import { MarkdownServiceRequest, MarkdownServiceResponse } from '@storyscribe-ai/model/types';
 
 import { OLLAMA_MARKDOWN_MODEL } from '../config';
 import { logInfo, logSuccess, toSeconds } from '../utils';
@@ -22,10 +22,13 @@ async function convertTextToMarkdown(summaries: string[]): Promise<string> {
     try {
       const {
         data: { response },
-      } = await axios.post<MarkdownRequest, AxiosResponse<MarkdownResponse>, MarkdownRequest>('/markdown', {
-        model: OLLAMA_MARKDOWN_MODEL,
-        summary,
-      });
+      } = await axios.post<MarkdownServiceRequest, AxiosResponse<MarkdownServiceResponse>, MarkdownServiceRequest>(
+        '/markdown',
+        {
+          model: OLLAMA_MARKDOWN_MODEL,
+          summary,
+        }
+      );
 
       markdowns.push(response.trim());
       markdowns.push('\n\n'); // add '\n\n\n' to separate summaries

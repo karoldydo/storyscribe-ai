@@ -1,12 +1,38 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+import { Movie } from './movie';
+
+export interface ITranscription {
+  content: string;
+  created: Date;
+  id: string;
+  modified: Date;
+  movieId: string;
+  status: 'completed' | 'failed' | 'in-progress' | 'pending';
+}
 
 @Entity({ name: 'transcription', orderBy: { modified: 'DESC' } })
-export class Transcription {
+export class Transcription implements ITranscription {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
+  @ManyToOne(() => Movie, (movie) => movie.transcriptions, { nullable: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'movie_id' })
+  movie!: Movie;
+
+  @Column({ name: 'movie_id', nullable: false, type: 'uuid' })
+  movieId!: string;
+
   @Column({ nullable: true, type: 'text' })
-  content?: string;
+  content!: string;
 
   @Column({ nullable: false, type: 'varchar' })
   status!: 'completed' | 'failed' | 'in-progress' | 'pending';

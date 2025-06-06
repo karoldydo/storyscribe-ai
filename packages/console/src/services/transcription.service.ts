@@ -1,4 +1,4 @@
-import { TranscriptionRequest, TranscriptionResponse } from '@storyscribe-ai/model/types';
+import { TranscriptionServiceRequest, TranscriptionServiceResponse } from '@storyscribe-ai/model/types';
 import path from 'path';
 
 import { WHISPER_LANGUAGE, WHISPER_MODEL } from '../config';
@@ -22,14 +22,15 @@ async function transcribe(files: string[]): Promise<string[]> {
     try {
       const {
         data: { transcript },
-      } = await axios.post<TranscriptionResponse, AxiosResponse<TranscriptionResponse>, TranscriptionRequest>(
-        '/transcribe',
-        {
-          file_name: path.basename(files[i]),
-          language: WHISPER_LANGUAGE,
-          model: WHISPER_MODEL,
-        }
-      );
+      } = await axios.post<
+        TranscriptionServiceResponse,
+        AxiosResponse<TranscriptionServiceResponse>,
+        TranscriptionServiceRequest
+      >('/transcribe', {
+        file_name: path.basename(files[i]),
+        language: WHISPER_LANGUAGE,
+        model: WHISPER_MODEL,
+      });
 
       transcriptions.push(transcript.trim());
 

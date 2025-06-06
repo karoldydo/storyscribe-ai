@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MarkdownRequestSchema, MarkdownResponseSchema } from '../schemas';
+import { MarkdownServiceRequestSchema, MarkdownServiceResponseSchema } from '../schemas';
 
-export type MarkdownRequest = z.infer<typeof MarkdownRequestSchema>;
-export type MarkdownResponse = z.infer<typeof MarkdownResponseSchema>;
+export type MarkdownServiceRequest = z.infer<typeof MarkdownServiceRequestSchema>;
+export type MarkdownServiceResponse = z.infer<typeof MarkdownServiceResponseSchema>;

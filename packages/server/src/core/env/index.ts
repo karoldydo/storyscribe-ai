@@ -29,7 +29,7 @@ const DATABASE_SERVICE_HOST = process.env['DATABASE_SERVICE_HOST'] ?? 'localhost
 const REDIS_SERVICE_HOST = process.env['REDIS_SERVICE_HOST'] ?? 'localhost';
 
 // cors
-const DEVELOPMENT_ORIGINS = process.env['DEVELOPMENT_ORIGINS'] ?? 'http://localhost:4000';
+const DEVELOPMENT_ORIGINS = process.env['DEVELOPMENT_ORIGINS'] ?? 'http://localhost:4000,http://localhost:3000';
 const PRODUCTION_ORIGINS = process.env['PRODUCTION_ORIGINS'] ?? 'http://localhost:3000';
 
 // allowed origins
