@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
 import {
-  TranscriptionApiCreateRequestSchema,
-  TranscriptionApiResponseSchema,
-  TranscriptionApiUpdateRequestSchema,
-  TranscriptionServiceRequestSchema,
-  TranscriptionServiceResponseSchema,
+  transcriptionApiGetResponseSchema,
+  transcriptionApiPostRequestSchema,
+  transcriptionApiPutRequestSchema,
+  transcriptionServiceRequestSchema,
+  transcriptionServiceResponseSchema,
 } from '../schemas';
 
-export type TranscriptionApiCreateRequest = z.infer<typeof TranscriptionApiCreateRequestSchema>;
-export type TranscriptionApiResponse = z.infer<typeof TranscriptionApiResponseSchema>;
-export type TranscriptionApiUpdateRequest = z.infer<typeof TranscriptionApiUpdateRequestSchema>;
+export type TranscriptionApiGetResponse = z.infer<typeof transcriptionApiGetResponseSchema>;
+export type TranscriptionApiPostRequest = z.infer<typeof transcriptionApiPostRequestSchema>;
+export type TranscriptionApiPutRequest = z.infer<typeof transcriptionApiPutRequestSchema>;
 
-export type TranscriptionServiceRequest = z.infer<typeof TranscriptionServiceRequestSchema>;
-export type TranscriptionServiceResponse = z.infer<typeof TranscriptionServiceResponseSchema>;
+export type TranscriptionServiceRequest = z.infer<typeof transcriptionServiceRequestSchema>;
+export type TranscriptionServiceResponse = z.infer<typeof transcriptionServiceResponseSchema>;

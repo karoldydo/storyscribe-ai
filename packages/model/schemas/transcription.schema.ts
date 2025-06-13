@@ -3,7 +3,7 @@ import { extendZodWithOpenApi } from 'zod-openapi';
 
 extendZodWithOpenApi(z);
 
-export const TranscriptionServiceRequestSchema = z.object({
+export const transcriptionServiceRequestSchema = z.object({
   file_name: z.string(),
   language: z.string().optional(),
   model: z
@@ -22,20 +22,53 @@ export const TranscriptionServiceRequestSchema = z.object({
     .optional(),
 });
 
-export const TranscriptionServiceResponseSchema = z.object({
+export const transcriptionServiceResponseSchema = z.object({
   transcript: z.string(),
 });
 
-export const TranscriptionApiCreateRequestSchema = z
+export const transcriptionApiPostRequestSchema = z
   .object({
-    movieId: z.string().openapi({
-      description: 'The id of the movie associated with the transcription',
-      example: '12345678-1234-1234-1234-123456789012',
-    }),
+    movieId: z
+      .string({ message: 'The movieId must be a string' })
+      .trim()
+      .min(1, 'The movieId must be a non-empty string')
+      .uuid('The movieId must be a valid UUID')
+      .openapi({
+        description: 'The movieId of the movie associated with the transcription',
+        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
+      }),
   })
   .openapi({ title: 'TranscriptionApiCreateRequestSchema' });
 
-export const TranscriptionApiUpdateRequestSchema = z
+export const transcriptionApiGetRequestSchema = z
+  .object({
+    id: z
+      .string({ message: 'The id must be a string' })
+      .trim()
+      .min(1, 'The id must be a non-empty string')
+      .uuid('The id must be a valid UUID')
+      .openapi({
+        description: 'The id of the transcription to be retrieved',
+        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
+      }),
+  })
+  .openapi({ title: 'TranscriptionApiGetRequestSchema' });
+
+export const transcriptionApiDeleteRequestSchema = z
+  .object({
+    id: z
+      .string({ message: 'The id must be a string' })
+      .trim()
+      .min(1, 'The id must be a non-empty string')
+      .uuid('The id must be a valid UUID')
+      .openapi({
+        description: 'The id of the transcription to be deleted',
+        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
+      }),
+  })
+  .openapi({ title: 'TranscriptionApiDeleteRequestSchema' });
+
+export const transcriptionApiPutRequestSchema = z
   .object({
     content: z.string().optional().openapi({
       description: 'The content of the transcription, if available',
@@ -47,7 +80,7 @@ export const TranscriptionApiUpdateRequestSchema = z
     }),
     movieId: z.string().optional().openapi({
       description: 'The id of the movie associated with the transcription',
-      example: '12345678-1234-1234-1234-123456789012',
+      example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
     }),
     status: z
       .union([z.literal('completed'), z.literal('failed'), z.literal('in-progress'), z.literal('pending')])
@@ -58,7 +91,7 @@ export const TranscriptionApiUpdateRequestSchema = z
   })
   .openapi({ title: 'TranscriptionApiUpdateRequestSchema' });
 
-export const TranscriptionApiResponseSchema = z
+export const transcriptionApiGetResponseSchema = z
   .object({
     content: z.string().optional().openapi({
       description: 'The transcript content, if available',
@@ -78,7 +111,7 @@ export const TranscriptionApiResponseSchema = z
     }),
     movieId: z.string().openapi({
       description: 'The id of the movie associated with the transcription',
-      example: '12345678-1234-1234-1234-123456789012',
+      example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
     }),
     status: z
       .union([z.literal('completed'), z.literal('failed'), z.literal('in-progress'), z.literal('pending')])
@@ -88,3 +121,12 @@ export const TranscriptionApiResponseSchema = z
       }),
   })
   .openapi({ title: 'TranscriptionApiResponseSchema' });
+
+export const transcriptionApiErrorResponseSchema = z
+  .object({
+    message: z.string().openapi({
+      description: 'Error message describing the issue',
+      example: 'An error occurred while processing the request',
+    }),
+  })
+  .openapi({ title: 'TranscriptionApiErrorResponseSchema' });

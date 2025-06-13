@@ -2,9 +2,10 @@ import { z } from 'zod';
 import { createDocument } from 'zod-openapi';
 
 import {
-  TranscriptionApiCreateRequestSchema,
-  TranscriptionApiResponseSchema,
-  TranscriptionApiUpdateRequestSchema,
+  transcriptionApiErrorResponseSchema,
+  transcriptionApiGetResponseSchema,
+  transcriptionApiPostRequestSchema,
+  transcriptionApiPutRequestSchema,
 } from '../schemas';
 
 export const transcriptionSwaggerSpecification = createDocument({
@@ -20,8 +21,12 @@ export const transcriptionSwaggerSpecification = createDocument({
         description: 'Retrieves all transcriptions.',
         responses: {
           200: {
-            content: { 'application/json': { schema: z.array(TranscriptionApiResponseSchema) } },
+            content: { 'application/json': { schema: z.array(transcriptionApiGetResponseSchema) } },
             description: 'List of all transcriptions',
+          },
+          500: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Internal server error',
           },
         },
         summary: 'Get all transcriptions',
@@ -30,13 +35,21 @@ export const transcriptionSwaggerSpecification = createDocument({
       post: {
         description: 'Creates a new transcription request with the provided file name.',
         requestBody: {
-          content: { 'application/json': { schema: TranscriptionApiCreateRequestSchema } },
+          content: { 'application/json': { schema: transcriptionApiPostRequestSchema } },
           required: true,
         },
         responses: {
           202: {
-            content: { 'application/json': { schema: TranscriptionApiResponseSchema } },
+            content: { 'application/json': { schema: transcriptionApiGetResponseSchema } },
             description: 'Transcription created successfully',
+          },
+          400: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Bad request',
+          },
+          500: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Internal server error',
           },
         },
         summary: 'Create a new transcription request',
@@ -45,13 +58,25 @@ export const transcriptionSwaggerSpecification = createDocument({
       put: {
         description: 'Updates an existing transcription with the provided content, id, and status.',
         requestBody: {
-          content: { 'application/json': { schema: TranscriptionApiUpdateRequestSchema } },
+          content: { 'application/json': { schema: transcriptionApiPutRequestSchema } },
           required: true,
         },
         responses: {
           200: {
-            content: { 'application/json': { schema: TranscriptionApiResponseSchema } },
+            content: { 'application/json': { schema: transcriptionApiGetResponseSchema } },
             description: 'Transcription updated successfully',
+          },
+          400: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Bad request',
+          },
+          404: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Not found',
+          },
+          500: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Internal server error',
           },
         },
         summary: 'Update an existing transcription',
@@ -73,6 +98,18 @@ export const transcriptionSwaggerSpecification = createDocument({
           204: {
             description: 'Transcription deleted successfully',
           },
+          400: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Bad request',
+          },
+          404: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Not found',
+          },
+          500: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Internal server error',
+          },
         },
         summary: 'Delete a transcription by id',
         tags: ['Transcription'],
@@ -89,8 +126,20 @@ export const transcriptionSwaggerSpecification = createDocument({
         ],
         responses: {
           200: {
-            content: { 'application/json': { schema: TranscriptionApiResponseSchema } },
+            content: { 'application/json': { schema: transcriptionApiGetResponseSchema } },
             description: 'Transcription retrieved successfully',
+          },
+          400: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Bad request',
+          },
+          404: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Not found',
+          },
+          500: {
+            content: { 'application/json': { schema: transcriptionApiErrorResponseSchema } },
+            description: 'Internal server error',
           },
         },
         summary: 'Get a transcription by id',

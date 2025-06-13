@@ -22,7 +22,7 @@ export const movieApiGetRequestSchema = z
       .uuid('The id must be a valid UUID')
       .openapi({
         description: 'The id of the movie to be retrieved',
-        example: '12345678-1234-1234-1234-123456789012',
+        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
   .openapi({ title: 'MovieApiGetRequestSchema' });
@@ -36,7 +36,7 @@ export const movieApiDeleteRequestSchema = z
       .uuid('The id must be a valid UUID')
       .openapi({
         description: 'The id of the movie to be deleted',
-        example: '12345678-1234-1234-1234-123456789012',
+        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
   .openapi({ title: 'MovieApiDeleteRequestSchema' });
@@ -65,7 +65,7 @@ export const movieApiGetResponseSchema = z
       .min(1, { message: 'The id must be a non-empty string' })
       .openapi({
         description: 'The id of the movie',
-        example: '12345678-1234-1234-1234-123456789012',
+        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
     mimetype: z
       .string({ message: 'The MIME type must be a string' })

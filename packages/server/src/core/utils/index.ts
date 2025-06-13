@@ -8,7 +8,7 @@ import logger from '../logger';
 
 type AsyncRequestHandler = (request: Request, response: Response, next: NextFunction) => Promise<void>;
 
-const createHttpError = (code: StatusCodes, message: string) => {
+const createHttpError = (code: StatusCodes, message: string): createError.HttpError => {
   throw createError(code, message);
 };
 
@@ -64,6 +64,13 @@ const tryCatchWrapper =
         const message = capitalize(error.message);
         logError(request, message, StatusCodes.NOT_FOUND);
         response.status(StatusCodes.NOT_FOUND).json({ message });
+        return;
+      }
+
+      if (error instanceof Error) {
+        const message = capitalize(error.message);
+        logError(request, message, StatusCodes.INTERNAL_SERVER_ERROR);
+        response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message });
         return;
       }
 

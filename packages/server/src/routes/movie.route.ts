@@ -8,9 +8,9 @@ import { createHttpError, tryCatchWrapper } from '../core/utils';
 import { MovieService } from '../services';
 
 const movieService = new MovieService();
-const movieRouter = Router();
+const router = Router();
 
-movieRouter
+router
   .route('/')
   .post(
     uploadSingleMovieMiddleware,
@@ -30,7 +30,7 @@ movieRouter
     })
   );
 
-movieRouter
+router
   .route('/:id')
   .delete(
     paramSchemaValidatorMiddleware(movieApiDeleteRequestSchema),
@@ -51,4 +51,4 @@ movieRouter
     })
   );
 
-export { movieRouter };
+export { router as movieRouter };
