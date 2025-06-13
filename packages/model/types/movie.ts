@@ -1,6 +1,15 @@
 import { z } from 'zod';
 
-import { MovieApiCreateRequestSchema, MovieApiResponseSchema } from '../schemas';
+import {
+  movieApiDeleteRequestSchema,
+  movieApiErrorResponseSchema,
+  movieApiGetRequestSchema,
+  movieApiGetResponseSchema,
+  movieApiPostRequestSchema,
+} from '../schemas';
 
-export type MovieApiCreateRequest = z.infer<typeof MovieApiCreateRequestSchema>;
-export type MovieApiResponse = z.infer<typeof MovieApiResponseSchema>;
+export type MovieApiDeleteRequest = z.infer<typeof movieApiDeleteRequestSchema>;
+export type MovieApiErrorResponse = z.infer<typeof movieApiErrorResponseSchema>;
+export type MovieApiGetRequest = z.infer<typeof movieApiGetRequestSchema>;
+export type MovieApiGetResponse = z.infer<typeof movieApiGetResponseSchema>;
+export type MovieApiPostRequest = z.infer<typeof movieApiPostRequestSchema>;

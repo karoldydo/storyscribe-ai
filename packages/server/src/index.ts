@@ -14,28 +14,28 @@ import { transcriptionWorker } from './workers';
 
 dotevnv.config();
 
-const index = express();
+const server = express();
 
 // default middleware
-index.use(express.json());
-index.use(express.urlencoded({ extended: true }));
-index.use(cookieParser());
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+server.use(cookieParser());
 
 // set global variables
-index.set('csrf', initializeCsrf());
+server.set('csrf', initializeCsrf());
 
 // security
-index.use(helmetMiddleware());
-index.use(csrfMiddleware());
-index.use(corsMiddleware());
-index.disable('x-powered-by');
+server.use(helmetMiddleware());
+server.use(csrfMiddleware());
+server.use(corsMiddleware());
+server.disable('x-powered-by');
 
 // routes
-index.use('/api/docs', swagger.serve, swagger.setup(swaggerSpecification));
-index.use('/api/v1/movie', movieRouter);
-index.use('/api/v1/transcribe', transcriptionRouter);
+server.use('/api/docs', swagger.serve, swagger.setup(swaggerSpecification));
+server.use('/api/v1/movie', movieRouter);
+server.use('/api/v1/transcribe', transcriptionRouter);
 
-index.listen(PORT, async () => {
+server.listen(PORT, async () => {
   await databaseConnection();
   transcriptionWorker();
   logger.info(`Server is listening on port ${PORT}`);

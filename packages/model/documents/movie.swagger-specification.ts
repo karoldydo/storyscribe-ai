@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createDocument } from 'zod-openapi';
 
-import { MovieApiCreateRequestSchema, MovieApiResponseSchema } from '../schemas';
+import { movieApiErrorResponseSchema, movieApiGetResponseSchema, movieApiPostRequestSchema } from '../schemas';
 
 export const movieSwaggerSpecification = createDocument({
   info: {
@@ -16,12 +16,20 @@ export const movieSwaggerSpecification = createDocument({
         description: 'Retrieves all movies.',
         responses: {
           200: {
-            content: { 'application/json': { schema: z.array(MovieApiResponseSchema) } },
+            content: { 'application/json': { schema: z.array(movieApiGetResponseSchema) } },
             description: 'List of all movies',
           },
           400: {
-            content: { 'application/json': { schema: z.object({ message: z.string() }) } },
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
             description: 'Bad Request',
+          },
+          404: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Not Found',
+          },
+          500: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Internal Server Error',
           },
         },
         summary: 'Get all movies',
@@ -30,17 +38,21 @@ export const movieSwaggerSpecification = createDocument({
       post: {
         description: 'Creates a new movie with the provided file name.',
         requestBody: {
-          content: { 'multipart/form-data': { schema: MovieApiCreateRequestSchema } },
+          content: { 'multipart/form-data': { schema: movieApiPostRequestSchema } },
           required: true,
         },
         responses: {
           202: {
-            content: { 'application/json': { schema: MovieApiResponseSchema } },
+            content: { 'application/json': { schema: movieApiGetResponseSchema } },
             description: 'Movie created successfully',
           },
           400: {
-            content: { 'application/json': { schema: z.object({ message: z.string() }) } },
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
             description: 'Bad Request',
+          },
+          500: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Internal Server Error',
           },
         },
         summary: 'Create a new movie',
@@ -63,8 +75,16 @@ export const movieSwaggerSpecification = createDocument({
             description: 'Movie deleted successfully',
           },
           400: {
-            content: { 'application/json': { schema: z.object({ message: z.string() }) } },
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
             description: 'Bad Request',
+          },
+          404: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Not Found',
+          },
+          500: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Internal Server Error',
           },
         },
         summary: 'Delete a movie by id',
@@ -82,12 +102,20 @@ export const movieSwaggerSpecification = createDocument({
         ],
         responses: {
           200: {
-            content: { 'application/json': { schema: MovieApiResponseSchema } },
+            content: { 'application/json': { schema: movieApiGetResponseSchema } },
             description: 'Single movie retrieved successfully',
           },
           400: {
-            content: { 'application/json': { schema: z.object({ message: z.string() }) } },
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
             description: 'Bad Request',
+          },
+          404: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Not Found',
+          },
+          500: {
+            content: { 'application/json': { schema: movieApiErrorResponseSchema } },
+            description: 'Internal Server Error',
           },
         },
         summary: 'Get a single movie by id',
