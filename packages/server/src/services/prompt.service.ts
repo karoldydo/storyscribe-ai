@@ -5,8 +5,8 @@ import { IPrompt, Prompt } from '../entities';
 export class PromptService {
   private repository = dataSource.getRepository(Prompt);
 
-  async create({ content, transcriptionId }: Pick<IPrompt, 'content' | 'transcriptionId'>): Promise<Prompt> {
-    const prompt = this.repository.create({ content, transcriptionId });
+  async create({ content, type }: Pick<IPrompt, 'content' | 'type'>): Promise<Prompt> {
+    const prompt = this.repository.create({ content, type });
     const result = await this.repository.save(prompt);
     if (!result) {
       throw createHttpError(500, 'Failed to create prompt.');
@@ -14,24 +14,24 @@ export class PromptService {
     return result;
   }
 
-  async update({ active, content, id, transcriptionId }: Omit<IPrompt, 'created' | 'modified'>): Promise<Prompt> {
+  async update({ active, content, id, type }: Omit<IPrompt, 'created' | 'modified'>): Promise<Prompt> {
     if (active) {
-      const result = await this.repository.update({ transcriptionId }, { active: false });
+      const result = await this.repository.update({ type }, { active: false });
       if (!result.affected) {
-        throw createHttpError(404, `Transcription with uuid ${transcriptionId} not found.`);
+        throw createHttpError(404, `Prompt with type ${type} not found.`);
       }
     }
-    const result = await this.repository.update(id, { active, content, transcriptionId });
+    const result = await this.repository.update(id, { active, content, type });
     if (!result.affected) {
       throw createHttpError(404, `Prompt with uuid ${id} not found.`);
     }
     return this.getOne({ id });
   }
 
-  async activate({ id, transcriptionId }: Pick<IPrompt, 'id' | 'transcriptionId'>): Promise<Prompt> {
-    const outcome = await this.repository.update({ transcriptionId }, { active: false });
+  async activate({ id, type }: Pick<IPrompt, 'id' | 'type'>): Promise<Prompt> {
+    const outcome = await this.repository.update({ type }, { active: false });
     if (!outcome.affected) {
-      throw createHttpError(404, `Transcription with uuid ${transcriptionId} not found.`);
+      throw createHttpError(404, `Prompt with type ${type} not found.`);
     }
     const result = await this.repository.update(id, { active: true });
     if (!result.affected) {
@@ -52,8 +52,12 @@ export class PromptService {
     return result;
   }
 
-  async getAllActive({ transcriptionId }: Pick<IPrompt, 'transcriptionId'>): Promise<Prompt[]> {
-    return this.repository.findBy({ active: true, transcriptionId });
+  async getActiveByType({ type }: Pick<IPrompt, 'type'>): Promise<Prompt> {
+    const result = await this.repository.findOneBy({ active: true, type });
+    if (!result) {
+      throw createHttpError(404, `Active prompt with type ${type} not found.`);
+    }
+    return result;
   }
 
   async delete({ id }: Pick<IPrompt, 'id'>): Promise<void> {

@@ -34,7 +34,7 @@ export const promptSwaggerSpecification = createDocument({
         tags: ['Prompt'],
       },
       post: {
-        description: 'Creates a new prompt with the provided content and transcription id.',
+        description: 'Creates a new prompt with the provided content and type.',
         requestBody: {
           content: { 'application/json': { schema: promptApiPostCreateRequestSchema } },
           required: true,
@@ -57,7 +57,7 @@ export const promptSwaggerSpecification = createDocument({
         tags: ['Prompt'],
       },
       put: {
-        description: 'Updates an existing prompt with the provided active status, content, id, and transcriptionId.',
+        description: 'Updates an existing prompt with the provided active status, content, id, and type.',
         requestBody: {
           content: { 'application/json': { schema: promptApiPutUpdateRequestSchema } },
           required: true,
@@ -143,7 +143,7 @@ export const promptSwaggerSpecification = createDocument({
     },
     '/api/v1/prompt/active': {
       patch: {
-        description: 'Activates a prompt with the provided id and transcriptionId.',
+        description: 'Activates a prompt with the provided id and type.',
         requestBody: {
           content: { 'application/json': { schema: promptApiPatchActivateRequestSchema } },
           required: true,
@@ -167,6 +167,40 @@ export const promptSwaggerSpecification = createDocument({
           },
         },
         summary: 'Activate a prompt',
+        tags: ['Prompt'],
+      },
+    },
+    '/api/v1/prompt/active/:type': {
+      get: {
+        description: 'Retrieves the active prompt by its type.',
+        parameters: [
+          {
+            description: 'The type of the active prompt to retrieve, either "markdown" or "summary"',
+            in: 'path',
+            name: 'type',
+            required: true,
+            schema: { enum: ['markdown', 'summary'], type: 'string' },
+          },
+        ],
+        responses: {
+          200: {
+            content: { 'application/json': { schema: promptApiGetOneResponseSchema } },
+            description: 'Active prompt retrieved successfully',
+          },
+          400: {
+            content: { 'application/json': { schema: promptApiErrorResponseSchema } },
+            description: 'Bad request',
+          },
+          404: {
+            content: { 'application/json': { schema: promptApiErrorResponseSchema } },
+            description: 'Active prompt not found',
+          },
+          500: {
+            content: { 'application/json': { schema: promptApiErrorResponseSchema } },
+            description: 'Internal server error',
+          },
+        },
+        summary: 'Get active prompt by type',
         tags: ['Prompt'],
       },
     },

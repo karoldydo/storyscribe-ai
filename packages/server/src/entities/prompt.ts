@@ -1,14 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-
-import { Transcription } from './transcription';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export interface IPrompt {
   active: boolean;
@@ -16,7 +6,7 @@ export interface IPrompt {
   created: Date;
   id: string;
   modified: Date;
-  transcriptionId: string;
+  type: 'markdown' | 'summary';
 }
 
 @Entity({ name: 'prompt', orderBy: { modified: 'DESC' } })
@@ -24,15 +14,11 @@ export class Prompt implements IPrompt {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => Transcription, (transcription) => transcription.prompts, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'transcriptionId' })
-  transcription!: Transcription;
-
-  @Column({ name: 'transcriptionId', nullable: false, type: 'uuid' })
-  transcriptionId!: string;
-
-  @Column({ nullable: true, type: 'text' })
+  @Column({ nullable: false, type: 'text' })
   content!: string;
+
+  @Column({ enum: ['markdown', 'summary'], nullable: false, type: 'enum' })
+  type!: 'markdown' | 'summary';
 
   @Column({ default: false, nullable: false, type: 'boolean' })
   active!: boolean;

@@ -3,7 +3,7 @@ import { z } from 'zod';
 import {
   promptApiDeleteOneRequestSchema,
   promptApiErrorResponseSchema,
-  promptApiGetAllActiveRequestSchema,
+  promptApiGetActiveByTypeRequestSchema,
   promptApiGetOneRequestSchema,
   promptApiGetOneResponseSchema,
   promptApiPatchActivateRequestSchema,
@@ -13,7 +13,7 @@ import {
 
 export type PromptApiDeleteOneRequest = z.infer<typeof promptApiDeleteOneRequestSchema>;
 export type PromptApiErrorResponse = z.infer<typeof promptApiErrorResponseSchema>;
-export type PromptApiGetAllActiveRequest = z.infer<typeof promptApiGetAllActiveRequestSchema>;
+export type PromptApiGetActiveByTypeRequest = z.infer<typeof promptApiGetActiveByTypeRequestSchema>;
 export type PromptApiGetOneRequest = z.infer<typeof promptApiGetOneRequestSchema>;
 export type PromptApiGetOneResponse = z.infer<typeof promptApiGetOneResponseSchema>;
 export type PromptApiPatchActivateRequest = z.infer<typeof promptApiPatchActivateRequestSchema>;

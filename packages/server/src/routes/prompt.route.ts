@@ -1,5 +1,6 @@
 import {
   promptApiDeleteOneRequestSchema,
+  promptApiGetActiveByTypeRequestSchema,
   promptApiGetOneRequestSchema,
   promptApiPatchActivateRequestSchema,
   promptApiPostCreateRequestSchema,
@@ -7,6 +8,7 @@ import {
 } from '@storyscribe-ai/model/schemas';
 import {
   PromptApiDeleteOneRequest,
+  PromptApiGetActiveByTypeRequest,
   PromptApiGetOneRequest,
   PromptApiPatchActivateRequest,
   PromptApiPostCreateRequest,
@@ -27,16 +29,16 @@ router
   .post(
     bodySchemaValidatorMiddleware(promptApiPostCreateRequestSchema),
     tryCatchWrapper(async (request, response) => {
-      const { content, transcriptionId } = request.body as PromptApiPostCreateRequest;
-      const prompt = await transcriptionService.create({ content, transcriptionId });
+      const { content, type } = request.body as PromptApiPostCreateRequest;
+      const prompt = await transcriptionService.create({ content, type });
       response.status(StatusCodes.CREATED).json(prompt);
     })
   )
   .put(
     bodySchemaValidatorMiddleware(promptApiPutUpdateRequestSchema),
     tryCatchWrapper(async (request, response) => {
-      const { active, content, id, transcriptionId } = request.body as PromptApiPutUpdateRequest;
-      const prompt = await transcriptionService.update({ active, content, id, transcriptionId });
+      const { active, content, id, type } = request.body as PromptApiPutUpdateRequest;
+      const prompt = await transcriptionService.update({ active, content, id, type });
       response.status(StatusCodes.OK).json(prompt);
     })
   )
@@ -66,11 +68,20 @@ router
     })
   );
 
+router.route('/active/:type').get(
+  paramSchemaValidatorMiddleware(promptApiGetActiveByTypeRequestSchema),
+  tryCatchWrapper(async (request, response) => {
+    const { type } = request.params as PromptApiGetActiveByTypeRequest;
+    const prompt = await transcriptionService.getActiveByType({ type });
+    response.status(StatusCodes.OK).json(prompt);
+  })
+);
+
 router.route('/activate').patch(
   bodySchemaValidatorMiddleware(promptApiPatchActivateRequestSchema),
   tryCatchWrapper(async (request, response) => {
-    const { id, transcriptionId } = request.body as PromptApiPatchActivateRequest;
-    const prompt = await transcriptionService.activate({ id, transcriptionId });
+    const { id, type } = request.body as PromptApiPatchActivateRequest;
+    const prompt = await transcriptionService.activate({ id, type });
     response.status(StatusCodes.OK).json(prompt);
   })
 );

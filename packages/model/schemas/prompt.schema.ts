@@ -13,15 +13,10 @@ export const promptApiPostCreateRequestSchema = z
         description: 'The content of the prompt to be created',
         example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       }),
-    transcriptionId: z
-      .string({ message: 'The transcriptionId must be a string' })
-      .trim()
-      .min(1, 'The transcriptionId must be a non-empty string')
-      .uuid('The transcriptionId must be a valid UUID')
-      .openapi({
-        description: 'The UUID of the transcription associated with the prompt',
-        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
-      }),
+    type: z.enum(['markdown', 'summary']).openapi({
+      description: 'The type of the prompt, either "markdown" or "summary"',
+      example: 'markdown',
+    }),
   })
   .openapi({ title: 'PromptApiPostCreateRequestSchema' });
 
@@ -48,15 +43,10 @@ export const promptApiPutUpdateRequestSchema = z
         description: 'The UUID of the prompt to be updated',
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
-    transcriptionId: z
-      .string({ message: 'The transcriptionId must be a string' })
-      .trim()
-      .min(1, 'The transcriptionId must be a non-empty string')
-      .uuid('The transcriptionId must be a valid UUID')
-      .openapi({
-        description: 'The UUID of the transcription associated with the prompt',
-        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
-      }),
+    type: z.enum(['markdown', 'summary']).openapi({
+      description: 'The type of the prompt, either "markdown" or "summary"',
+      example: 'markdown',
+    }),
   })
   .openapi({ title: 'PromptApiPutUpdateRequestSchema' });
 
@@ -71,15 +61,10 @@ export const promptApiPatchActivateRequestSchema = z
         description: 'The UUID of the prompt to be activated',
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
-    transcriptionId: z
-      .string({ message: 'The transcriptionId must be a string' })
-      .trim()
-      .min(1, 'The transcriptionId must be a non-empty string')
-      .uuid('The transcriptionId must be a valid UUID')
-      .openapi({
-        description: 'The UUID of the transcription associated with the prompt',
-        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
-      }),
+    type: z.enum(['markdown', 'summary']).openapi({
+      description: 'The type of the prompt, either "markdown" or "summary"',
+      example: 'markdown',
+    }),
   })
   .openapi({ title: 'PromptApiPatchActivateRequestSchema' });
 
@@ -114,15 +99,10 @@ export const promptApiGetOneResponseSchema = z
       description: 'The last modification timestamp of the prompt',
       example: '2023-10-01T12:00:00Z',
     }),
-    transcriptionId: z
-      .string({ message: 'The transcriptionId must be a string' })
-      .trim()
-      .min(1, 'The transcriptionId must be a non-empty string')
-      .uuid('The transcriptionId must be a valid UUID')
-      .openapi({
-        description: 'The UUID of the transcription associated with the prompt',
-        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
-      }),
+    type: z.enum(['markdown', 'summary']).openapi({
+      description: 'The type of the prompt, either "markdown" or "summary"',
+      example: 'markdown',
+    }),
   })
   .openapi({ title: 'PromptApiGetOneResponseSchema' });
 
@@ -140,17 +120,12 @@ export const promptApiGetOneRequestSchema = z
   })
   .openapi({ title: 'PromptApiGetOneRequestSchema' });
 
-export const promptApiGetAllActiveRequestSchema = z
+export const promptApiGetActiveByTypeRequestSchema = z
   .object({
-    transcriptionId: z
-      .string({ message: 'The transcriptionId must be a string' })
-      .trim()
-      .min(1, 'The transcriptionId must be a non-empty string')
-      .uuid('The transcriptionId must be a valid UUID')
-      .openapi({
-        description: 'The UUID of the transcription associated with the active prompts',
-        example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
-      }),
+    type: z.enum(['markdown', 'summary']).openapi({
+      description: 'The type of the prompt, either "markdown" or "summary"',
+      example: 'markdown',
+    }),
   })
   .openapi({ title: 'PromptApiGetAllActiveRequestSchema' });
 

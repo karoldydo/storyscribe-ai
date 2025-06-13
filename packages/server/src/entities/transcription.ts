@@ -4,13 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Movie } from './movie';
-import { Prompt } from './prompt';
 
 export interface ITranscription {
   content: string;
@@ -36,11 +34,8 @@ export class Transcription implements ITranscription {
   @Column({ nullable: true, type: 'text' })
   content!: string;
 
-  @Column({ nullable: false, type: 'varchar' })
+  @Column({ enum: ['completed', 'failed', 'in-progress', 'pending'], nullable: false, type: 'enum' })
   status!: 'completed' | 'failed' | 'in-progress' | 'pending';
-
-  @OneToMany(() => Prompt, (prompt) => prompt.transcription)
-  prompts!: Prompt[];
 
   @CreateDateColumn({ nullable: false, type: 'timestamp with time zone' })
   created!: Date;
