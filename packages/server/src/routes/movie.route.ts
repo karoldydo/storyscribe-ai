@@ -1,4 +1,4 @@
-import { movieApiDeleteRequestSchema, movieApiGetRequestSchema } from '@storyscribe-ai/model/schemas';
+import { movieApiDeleteOneRequestSchema, movieApiGetOneRequestSchema } from '@storyscribe-ai/model/schemas';
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
@@ -33,7 +33,7 @@ router
 router
   .route('/:id')
   .delete(
-    paramSchemaValidatorMiddleware(movieApiDeleteRequestSchema),
+    paramSchemaValidatorMiddleware(movieApiDeleteOneRequestSchema),
     tryCatchWrapper(async (request, response) => {
       const { id } = request.params;
       const { filename } = await movieService.getOne({ id });
@@ -43,7 +43,7 @@ router
     })
   )
   .get(
-    paramSchemaValidatorMiddleware(movieApiGetRequestSchema),
+    paramSchemaValidatorMiddleware(movieApiGetOneRequestSchema),
     tryCatchWrapper(async (request, response) => {
       const { id } = request.params;
       const movie = await movieService.getOne({ id });

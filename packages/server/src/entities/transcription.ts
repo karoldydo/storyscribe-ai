@@ -4,11 +4,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Movie } from './movie';
+import { Prompt } from './prompt';
 
 export interface ITranscription {
   content: string;
@@ -25,10 +27,10 @@ export class Transcription implements ITranscription {
   id!: string;
 
   @ManyToOne(() => Movie, (movie) => movie.transcriptions, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'movie_id' })
+  @JoinColumn({ name: 'movieId' })
   movie!: Movie;
 
-  @Column({ name: 'movie_id', nullable: false, type: 'uuid' })
+  @Column({ name: 'movieId', nullable: false, type: 'uuid' })
   movieId!: string;
 
   @Column({ nullable: true, type: 'text' })
@@ -36,6 +38,9 @@ export class Transcription implements ITranscription {
 
   @Column({ nullable: false, type: 'varchar' })
   status!: 'completed' | 'failed' | 'in-progress' | 'pending';
+
+  @OneToMany(() => Prompt, (prompt) => prompt.transcription)
+  prompts!: Prompt[];
 
   @CreateDateColumn({ nullable: false, type: 'timestamp with time zone' })
   created!: Date;

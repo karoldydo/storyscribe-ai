@@ -1,10 +1,10 @@
 import {
-  transcriptionApiDeleteRequestSchema,
-  transcriptionApiGetRequestSchema,
-  transcriptionApiPostRequestSchema,
-  transcriptionApiPutRequestSchema,
+  transcriptionApiDeleteOneRequestSchema,
+  transcriptionApiGetOneRequestSchema,
+  transcriptionApiPostCreateRequestSchema,
+  transcriptionApiPutUpdateRequestSchema,
 } from '@storyscribe-ai/model/schemas';
-import { TranscriptionApiPostRequest, TranscriptionApiPutRequest } from '@storyscribe-ai/model/types';
+import { TranscriptionApiPostCreateRequest, TranscriptionApiPutUpdateRequest } from '@storyscribe-ai/model/types';
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
@@ -19,18 +19,18 @@ const transcriptionService = new TranscriptionService();
 router
   .route('/')
   .post(
-    bodySchemaValidatorMiddleware(transcriptionApiPostRequestSchema),
+    bodySchemaValidatorMiddleware(transcriptionApiPostCreateRequestSchema),
     tryCatchWrapper(async (request, response) => {
-      const { movieId } = request.body as TranscriptionApiPostRequest;
+      const { movieId } = request.body as TranscriptionApiPostCreateRequest;
       const transcription = await transcriptionService.create({ movieId });
       await transcriptionQueue.add('transcribe', null, { jobId: transcription.id });
       response.status(StatusCodes.ACCEPTED).json(transcription);
     })
   )
   .put(
-    bodySchemaValidatorMiddleware(transcriptionApiPutRequestSchema),
+    bodySchemaValidatorMiddleware(transcriptionApiPutUpdateRequestSchema),
     tryCatchWrapper(async (request, response) => {
-      const { content, id, movieId, status } = request.body as TranscriptionApiPutRequest;
+      const { content, id, movieId, status } = request.body as TranscriptionApiPutUpdateRequest;
       const transcription = await transcriptionService.update({ content, id, movieId, status });
       response.status(StatusCodes.OK).json(transcription);
     })
@@ -45,7 +45,7 @@ router
 router
   .route('/:id')
   .get(
-    paramSchemaValidatorMiddleware(transcriptionApiGetRequestSchema),
+    paramSchemaValidatorMiddleware(transcriptionApiGetOneRequestSchema),
     tryCatchWrapper(async (request, response) => {
       const { id } = request.params;
       const transcription = await transcriptionService.getOne({ id });
@@ -53,7 +53,7 @@ router
     })
   )
   .delete(
-    paramSchemaValidatorMiddleware(transcriptionApiDeleteRequestSchema),
+    paramSchemaValidatorMiddleware(transcriptionApiDeleteOneRequestSchema),
     tryCatchWrapper(async (request, response) => {
       const { id } = request.params;
       await transcriptionService.delete({ id });

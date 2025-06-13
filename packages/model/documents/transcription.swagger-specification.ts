@@ -3,9 +3,9 @@ import { createDocument } from 'zod-openapi';
 
 import {
   transcriptionApiErrorResponseSchema,
-  transcriptionApiGetResponseSchema,
-  transcriptionApiPostRequestSchema,
-  transcriptionApiPutRequestSchema,
+  transcriptionApiGetOneResponseSchema,
+  transcriptionApiPostCreateRequestSchema,
+  transcriptionApiPutUpdateRequestSchema,
 } from '../schemas';
 
 export const transcriptionSwaggerSpecification = createDocument({
@@ -21,7 +21,7 @@ export const transcriptionSwaggerSpecification = createDocument({
         description: 'Retrieves all transcriptions.',
         responses: {
           200: {
-            content: { 'application/json': { schema: z.array(transcriptionApiGetResponseSchema) } },
+            content: { 'application/json': { schema: z.array(transcriptionApiGetOneResponseSchema) } },
             description: 'List of all transcriptions',
           },
           500: {
@@ -35,12 +35,12 @@ export const transcriptionSwaggerSpecification = createDocument({
       post: {
         description: 'Creates a new transcription request with the provided file name.',
         requestBody: {
-          content: { 'application/json': { schema: transcriptionApiPostRequestSchema } },
+          content: { 'application/json': { schema: transcriptionApiPostCreateRequestSchema } },
           required: true,
         },
         responses: {
           202: {
-            content: { 'application/json': { schema: transcriptionApiGetResponseSchema } },
+            content: { 'application/json': { schema: transcriptionApiGetOneResponseSchema } },
             description: 'Transcription created successfully',
           },
           400: {
@@ -58,12 +58,12 @@ export const transcriptionSwaggerSpecification = createDocument({
       put: {
         description: 'Updates an existing transcription with the provided content, id, and status.',
         requestBody: {
-          content: { 'application/json': { schema: transcriptionApiPutRequestSchema } },
+          content: { 'application/json': { schema: transcriptionApiPutUpdateRequestSchema } },
           required: true,
         },
         responses: {
           200: {
-            content: { 'application/json': { schema: transcriptionApiGetResponseSchema } },
+            content: { 'application/json': { schema: transcriptionApiGetOneResponseSchema } },
             description: 'Transcription updated successfully',
           },
           400: {
@@ -126,7 +126,7 @@ export const transcriptionSwaggerSpecification = createDocument({
         ],
         responses: {
           200: {
-            content: { 'application/json': { schema: transcriptionApiGetResponseSchema } },
+            content: { 'application/json': { schema: transcriptionApiGetOneResponseSchema } },
             description: 'Transcription retrieved successfully',
           },
           400: {

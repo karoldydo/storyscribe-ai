@@ -3,7 +3,7 @@ import { extendZodWithOpenApi } from 'zod-openapi';
 
 extendZodWithOpenApi(z);
 
-export const movieApiPostRequestSchema = z
+export const movieApiPostCreateRequestSchema = z
   .object({
     movie: z.instanceof(File).openapi({
       description: 'The movie file to be uploaded',
@@ -11,9 +11,9 @@ export const movieApiPostRequestSchema = z
       type: 'string',
     }),
   })
-  .openapi({ title: 'MovieApiCreateRequestSchema' });
+  .openapi({ title: 'MovieApiPostCreateRequestSchema' });
 
-export const movieApiGetRequestSchema = z
+export const movieApiGetOneRequestSchema = z
   .object({
     id: z
       .string({ message: 'The id must be a string' })
@@ -25,9 +25,9 @@ export const movieApiGetRequestSchema = z
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
-  .openapi({ title: 'MovieApiGetRequestSchema' });
+  .openapi({ title: 'MovieApiGetOneRequestSchema' });
 
-export const movieApiDeleteRequestSchema = z
+export const movieApiDeleteOneRequestSchema = z
   .object({
     id: z
       .string({ message: 'The id must be a string' })
@@ -39,9 +39,9 @@ export const movieApiDeleteRequestSchema = z
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
-  .openapi({ title: 'MovieApiDeleteRequestSchema' });
+  .openapi({ title: 'MovieApiDeleteOneRequestSchema' });
 
-export const movieApiGetResponseSchema = z
+export const movieApiGetOneResponseSchema = z
   .object({
     created: z
       .string({ message: 'The creation date must be a string' })
@@ -94,7 +94,7 @@ export const movieApiGetResponseSchema = z
         example: 100 * 1024 * 1024, // 100 MB
       }),
   })
-  .openapi({ title: 'MovieApiResponseSchema' });
+  .openapi({ title: 'MovieApiGetOneResponseSchema' });
 
 export const movieApiErrorResponseSchema = z
   .object({

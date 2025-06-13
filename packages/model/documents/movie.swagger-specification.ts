@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createDocument } from 'zod-openapi';
 
-import { movieApiErrorResponseSchema, movieApiGetResponseSchema, movieApiPostRequestSchema } from '../schemas';
+import { movieApiErrorResponseSchema, movieApiGetOneResponseSchema, movieApiPostCreateRequestSchema } from '../schemas';
 
 export const movieSwaggerSpecification = createDocument({
   info: {
@@ -16,7 +16,7 @@ export const movieSwaggerSpecification = createDocument({
         description: 'Retrieves all movies.',
         responses: {
           200: {
-            content: { 'application/json': { schema: z.array(movieApiGetResponseSchema) } },
+            content: { 'application/json': { schema: z.array(movieApiGetOneResponseSchema) } },
             description: 'List of all movies',
           },
           400: {
@@ -38,12 +38,12 @@ export const movieSwaggerSpecification = createDocument({
       post: {
         description: 'Creates a new movie with the provided file name.',
         requestBody: {
-          content: { 'multipart/form-data': { schema: movieApiPostRequestSchema } },
+          content: { 'multipart/form-data': { schema: movieApiPostCreateRequestSchema } },
           required: true,
         },
         responses: {
           202: {
-            content: { 'application/json': { schema: movieApiGetResponseSchema } },
+            content: { 'application/json': { schema: movieApiGetOneResponseSchema } },
             description: 'Movie created successfully',
           },
           400: {
@@ -102,7 +102,7 @@ export const movieSwaggerSpecification = createDocument({
         ],
         responses: {
           200: {
-            content: { 'application/json': { schema: movieApiGetResponseSchema } },
+            content: { 'application/json': { schema: movieApiGetOneResponseSchema } },
             description: 'Single movie retrieved successfully',
           },
           400: {

@@ -26,7 +26,7 @@ export const transcriptionServiceResponseSchema = z.object({
   transcript: z.string(),
 });
 
-export const transcriptionApiPostRequestSchema = z
+export const transcriptionApiPostCreateRequestSchema = z
   .object({
     movieId: z
       .string({ message: 'The movieId must be a string' })
@@ -38,9 +38,9 @@ export const transcriptionApiPostRequestSchema = z
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
-  .openapi({ title: 'TranscriptionApiCreateRequestSchema' });
+  .openapi({ title: 'TranscriptionApiPostCreateRequestSchema' });
 
-export const transcriptionApiGetRequestSchema = z
+export const transcriptionApiGetOneRequestSchema = z
   .object({
     id: z
       .string({ message: 'The id must be a string' })
@@ -52,9 +52,9 @@ export const transcriptionApiGetRequestSchema = z
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
-  .openapi({ title: 'TranscriptionApiGetRequestSchema' });
+  .openapi({ title: 'TranscriptionApiGetOneRequestSchema' });
 
-export const transcriptionApiDeleteRequestSchema = z
+export const transcriptionApiDeleteOneRequestSchema = z
   .object({
     id: z
       .string({ message: 'The id must be a string' })
@@ -66,9 +66,9 @@ export const transcriptionApiDeleteRequestSchema = z
         example: 'e124b181-2146-477f-a6b4-0ba2e5a6eb05',
       }),
   })
-  .openapi({ title: 'TranscriptionApiDeleteRequestSchema' });
+  .openapi({ title: 'TranscriptionApiDeleteOneRequestSchema' });
 
-export const transcriptionApiPutRequestSchema = z
+export const transcriptionApiPutUpdateRequestSchema = z
   .object({
     content: z.string().optional().openapi({
       description: 'The content of the transcription, if available',
@@ -89,9 +89,9 @@ export const transcriptionApiPutRequestSchema = z
         example: 'completed',
       }),
   })
-  .openapi({ title: 'TranscriptionApiUpdateRequestSchema' });
+  .openapi({ title: 'TranscriptionApiPutUpdateRequestSchema' });
 
-export const transcriptionApiGetResponseSchema = z
+export const transcriptionApiGetOneResponseSchema = z
   .object({
     content: z.string().optional().openapi({
       description: 'The transcript content, if available',
@@ -120,7 +120,7 @@ export const transcriptionApiGetResponseSchema = z
         example: 'completed',
       }),
   })
-  .openapi({ title: 'TranscriptionApiResponseSchema' });
+  .openapi({ title: 'TranscriptionApiGetOneResponseSchema' });
 
 export const transcriptionApiErrorResponseSchema = z
   .object({
