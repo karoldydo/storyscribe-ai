@@ -8,8 +8,8 @@ import logger from './core/logger';
 import { corsMiddleware, csrfMiddleware, helmetMiddleware } from './core/middlewares';
 import { initializeCsrf } from './core/security/csrf';
 import { swagger, swaggerSpecification } from './core/swagger';
-import { movieRouter, promptRouter, transcriptionRouter } from './routes';
-import { transcriptionWorker } from './workers';
+import { movieRouter, promptRouter, summaryRouter, transcriptionRouter } from './routes';
+import { summaryWorker, transcriptionWorker } from './workers';
 
 dotevnv.config();
 
@@ -34,9 +34,11 @@ server.use('/api/docs', swagger.serve, swagger.setup(swaggerSpecification));
 server.use('/api/v1/movie', movieRouter);
 server.use('/api/v1/transcribe', transcriptionRouter);
 server.use('/api/v1/prompt', promptRouter);
+server.use('/api/v1/summary', summaryRouter);
 
 server.listen(PORT, async () => {
   await databaseConnection();
   transcriptionWorker();
+  summaryWorker();
   logger.info(`Server is listening on port ${PORT}`);
 });

@@ -1,6 +1,7 @@
 import {
   movieSwaggerSpecification,
   promptSwaggerSpecification,
+  summarySwaggerSpecification,
   transcriptionSwaggerSpecification,
 } from '@storyscribe-ai/model/documents';
 import { merge } from 'lodash-es';
@@ -10,7 +11,8 @@ const swaggerSpecification = merge(
   {},
   movieSwaggerSpecification,
   transcriptionSwaggerSpecification,
-  promptSwaggerSpecification
+  promptSwaggerSpecification,
+  summarySwaggerSpecification
 );
 
 export { swagger, swaggerSpecification };

@@ -5,6 +5,7 @@ extendZodWithOpenApi(z);
 
 export const transcriptionServiceRequestSchema = z.object({
   file_name: z.string(),
+  file_path: z.string().optional(),
   language: z.string().optional(),
   model: z
     .union([

@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+
+import { Summary } from './summary';
 
 export interface IPrompt {
   active: boolean;
@@ -22,6 +24,9 @@ export class Prompt implements IPrompt {
 
   @Column({ default: false, nullable: false, type: 'boolean' })
   active!: boolean;
+
+  @OneToMany(() => Summary, (summary) => summary.prompt)
+  summaries!: Summary[];
 
   @CreateDateColumn({ nullable: false, type: 'timestamp with time zone' })
   created!: Date;

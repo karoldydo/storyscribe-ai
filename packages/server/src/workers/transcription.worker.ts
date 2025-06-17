@@ -35,6 +35,10 @@ const transcriptionWorker = () => {
     { concurrency: 1, connection: redisOptions }
   );
 
+  worker.on('ready', () => {
+    logger.info(`[WORKER] Transcription worker is ready to process jobs.`);
+  });
+
   worker.on('completed', async (job) => {
     if (job && job.id) {
       const { id } = job;

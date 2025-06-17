@@ -1,14 +1,19 @@
 import { dataSource } from '../core/database';
 import { PartialExcept } from '../core/types';
 import { createHttpError } from '../core/utils';
-import { ITranscription, Transcription } from '../entities';
+import { ITranscription, Movie, Transcription } from '../entities';
 
 export class TranscriptionService {
-  private repository = dataSource.getRepository(Transcription);
+  private transcriptionRepository = dataSource.getRepository(Transcription);
+  private movieRepository = dataSource.getRepository(Movie);
 
   async create({ movieId }: Pick<ITranscription, 'movieId'>): Promise<Transcription> {
-    const transcription = this.repository.create({ movieId, status: 'pending' });
-    const result = await this.repository.save(transcription);
+    const [movieResult] = await Promise.all([this.movieRepository.findOneBy({ id: movieId })]);
+    if (!movieResult) {
+      throw createHttpError(404, `Movie with uuid ${movieId} not found.`);
+    }
+    const transcription = this.transcriptionRepository.create({ movieId, status: 'pending' });
+    const result = await this.transcriptionRepository.save(transcription);
     if (!result) {
       throw createHttpError(500, 'Failed to create transcription.');
     }
@@ -16,7 +21,7 @@ export class TranscriptionService {
   }
 
   async update({ content, id, movieId, status }: PartialExcept<ITranscription, 'id'>): Promise<Transcription> {
-    const result = await this.repository.update(id, { content, movieId, status });
+    const result = await this.transcriptionRepository.update(id, { content, movieId, status });
     if (!result.affected) {
       throw createHttpError(404, `Transcription with uuid ${id} not found.`);
     }
@@ -24,11 +29,11 @@ export class TranscriptionService {
   }
 
   getAll(): Promise<Transcription[]> {
-    return this.repository.find();
+    return this.transcriptionRepository.find();
   }
 
   async getOne({ id }: Pick<ITranscription, 'id'>): Promise<Transcription> {
-    const result = await this.repository.findOneBy({ id });
+    const result = await this.transcriptionRepository.findOneBy({ id });
     if (!result) {
       throw createHttpError(404, `Transcription with uuid ${id} not found.`);
     }
@@ -36,7 +41,7 @@ export class TranscriptionService {
   }
 
   async delete({ id }: Pick<ITranscription, 'id'>): Promise<void> {
-    const result = await this.repository.delete(id);
+    const result = await this.transcriptionRepository.delete(id);
     if (!result.affected) {
       throw createHttpError(404, `Transcription with uuid ${id} not found.`);
     }

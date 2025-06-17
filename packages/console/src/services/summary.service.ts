@@ -1,4 +1,4 @@
-import { SummaryServiceRequest, SummaryServiceResponse } from '@storyscribe-ai/model/types';
+import { OllamaServiceResponse, SummaryServiceRequest } from '@storyscribe-ai/model/types';
 
 import { OLLAMA_SUMMARY_MODEL } from '../config';
 import { logInfo, logSuccess, toSeconds } from '../utils';
@@ -22,7 +22,7 @@ async function summarize(transcriptions: string[]): Promise<string[]> {
     try {
       const {
         data: { response },
-      } = await axios.post<SummaryServiceResponse, AxiosResponse<SummaryServiceResponse>, SummaryServiceRequest>(
+      } = await axios.post<OllamaServiceResponse, AxiosResponse<OllamaServiceResponse>, SummaryServiceRequest>(
         '/summarize',
         {
           model: OLLAMA_SUMMARY_MODEL,

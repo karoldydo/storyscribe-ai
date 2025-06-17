@@ -4,11 +4,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Movie } from './movie';
+import { Summary } from './summary';
 
 export interface ITranscription {
   content: string;
@@ -36,6 +38,9 @@ export class Transcription implements ITranscription {
 
   @Column({ enum: ['completed', 'failed', 'in-progress', 'pending'], nullable: false, type: 'enum' })
   status!: 'completed' | 'failed' | 'in-progress' | 'pending';
+
+  @OneToMany(() => Summary, (summary) => summary.transcription)
+  summaries!: Summary[];
 
   @CreateDateColumn({ nullable: false, type: 'timestamp with time zone' })
   created!: Date;
