@@ -4,39 +4,37 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import { Markdown } from './markdown';
 import { Prompt } from './prompt';
-import { Transcription } from './transcription';
+import { Summary } from './summary';
 
-export interface ISummary {
+export interface IMarkdown {
   content: string;
   created: Date;
   id: string;
   modified: Date;
   promptId: string;
   status: 'completed' | 'failed' | 'in-progress' | 'pending';
-  transcriptionId: string;
+  summaryId: string;
 }
 
-@Entity({ name: 'summary', orderBy: { modified: 'DESC' } })
-export class Summary implements ISummary {
+@Entity({ name: 'markdown', orderBy: { modified: 'DESC' } })
+export class Markdown implements IMarkdown {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => Transcription, (transcription) => transcription.summaries, {
+  @ManyToOne(() => Summary, (summary) => summary.markdowns, {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'transcriptionId' })
-  transcription!: Transcription;
+  @JoinColumn({ name: 'summaryId' })
+  summary!: Summary;
 
-  @Column({ name: 'transcriptionId', nullable: false, type: 'uuid' })
-  transcriptionId!: string;
+  @Column({ name: 'summaryId', nullable: false, type: 'uuid' })
+  summaryId!: string;
 
   @ManyToOne(() => Prompt, (prompt) => prompt.summaries, {
     nullable: false,
@@ -50,9 +48,6 @@ export class Summary implements ISummary {
 
   @Column({ nullable: true, type: 'text' })
   content!: string;
-
-  @OneToMany(() => Markdown, (markdown) => markdown.summary)
-  markdowns!: Markdown[];
 
   @Column({ enum: ['completed', 'failed', 'in-progress', 'pending'], nullable: false, type: 'enum' })
   status!: 'completed' | 'failed' | 'in-progress' | 'pending';

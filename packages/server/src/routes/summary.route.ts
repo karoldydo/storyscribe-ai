@@ -10,8 +10,8 @@ import { StatusCodes } from 'http-status-codes';
 
 import { bodySchemaValidatorMiddleware, paramSchemaValidatorMiddleware } from '../core/middlewares';
 import { tryCatchWrapper } from '../core/utils';
-import { summaryQueue } from '../queues/summary.queue';
-import { SummaryService } from '../services/summary.service';
+import { summaryQueue } from '../queues';
+import { SummaryService } from '../services';
 
 const router = Router();
 const summaryService = new SummaryService();

@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
+import { Markdown } from './markdown';
 import { Summary } from './summary';
 
 export interface IPrompt {
@@ -27,6 +28,9 @@ export class Prompt implements IPrompt {
 
   @OneToMany(() => Summary, (summary) => summary.prompt)
   summaries!: Summary[];
+
+  @OneToMany(() => Markdown, (markdown) => markdown.prompt)
+  markdowns!: Markdown[];
 
   @CreateDateColumn({ nullable: false, type: 'timestamp with time zone' })
   created!: Date;

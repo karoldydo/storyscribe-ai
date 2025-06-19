@@ -39,7 +39,7 @@ export const summaryApiPutUpdateRequestSchema = z
       .min(1, 'The content must be a non-empty string')
       .openapi({
         description: 'The updated content of the summary',
-        example: 'This is the updated summary content.',
+        example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       }),
     id: z
       .string({ message: 'The id must be a string' })
@@ -93,7 +93,7 @@ export const summaryApiGetOneResponseSchema = z
       .min(1, 'The content must be a non-empty string')
       .openapi({
         description: 'The content of the summary',
-        example: 'This is the summary content.',
+        example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       }),
     created: z.string().datetime().openapi({
       description: 'The creation date and time of the summary',

@@ -5,24 +5,24 @@ import { Worker } from 'bullmq';
 import { ollamaService } from '../core/axios';
 import logger from '../core/logger';
 import { redisOptions } from '../core/redis';
-import { PromptService, SummaryService, TranscriptionService } from '../services';
+import { MarkdownService, PromptService, SummaryService } from '../services';
 
-const summaryWorker = () => {
-  const summaryService = new SummaryService();
+const markdownWorker = () => {
+  const markdownService = new MarkdownService();
   const promptService = new PromptService();
-  const transcriptionService = new TranscriptionService();
+  const summaryService = new SummaryService();
 
   const worker = new Worker(
-    'summary',
+    'markdown',
     async (job) => {
       if (job && job.id) {
         const { id } = job;
 
-        const { promptId, transcriptionId } = await summaryService.update({ id, status: 'in-progress' });
+        const { promptId, summaryId } = await markdownService.update({ id, status: 'in-progress' });
         const { content: prompt } = await promptService.getOne({ id: promptId });
-        const { content: transcription } = await transcriptionService.getOne({ id: transcriptionId });
+        const { content: summary } = await summaryService.getOne({ id: summaryId });
 
-        logger.info(`[WORKER] Summary job ${id} started.`);
+        logger.info(`[WORKER] Markdown job ${id} started.`);
 
         const {
           data: { response: content },
@@ -30,26 +30,26 @@ const summaryWorker = () => {
           '/api/generate',
           {
             model: 'llama:latest',
-            prompt: `${prompt.trim()}\n\n${transcription.trim()}`,
+            prompt: `${prompt.trim()}\n\n${summary.trim()}`,
             stream: false,
           }
         );
 
-        await summaryService.update({ content, id });
+        await markdownService.update({ content, id });
       }
     },
     { concurrency: 1, connection: redisOptions }
   );
 
   worker.on('ready', () => {
-    logger.info(`[WORKER] Summary worker is ready to process jobs.`);
+    logger.info(`[WORKER] Markdown worker is ready to process jobs.`);
   });
 
   worker.on('completed', async (job) => {
     if (job && job.id) {
       const { id } = job;
-      summaryService.update({ id, status: 'completed' }).then(() => {
-        logger.info(`[WORKER] Summary job ${id} completed successfully.`);
+      markdownService.update({ id, status: 'completed' }).then(() => {
+        logger.info(`[WORKER] Markdown job ${id} completed successfully.`);
       });
     }
   });
@@ -57,11 +57,11 @@ const summaryWorker = () => {
   worker.on('failed', async (job, error) => {
     if (job && job.id) {
       const { id } = job;
-      await summaryService.update({ id, status: 'failed' }).then(() => {
-        logger.error(`[WORKER] Summary job ${id} failed: ${JSON.stringify(error, null, 2)}`);
+      await markdownService.update({ id, status: 'failed' }).then(() => {
+        logger.error(`[WORKER] Markdown job ${id} failed: ${JSON.stringify(error, null, 2)}`);
       });
     }
   });
 };
 
-export { summaryWorker };
+export { markdownWorker };

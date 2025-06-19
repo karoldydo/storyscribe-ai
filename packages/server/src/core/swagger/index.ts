@@ -1,4 +1,5 @@
 import {
+  markdownSwaggerSpecification,
   movieSwaggerSpecification,
   promptSwaggerSpecification,
   summarySwaggerSpecification,
@@ -12,7 +13,8 @@ const swaggerSpecification = merge(
   movieSwaggerSpecification,
   transcriptionSwaggerSpecification,
   promptSwaggerSpecification,
-  summarySwaggerSpecification
+  summarySwaggerSpecification,
+  markdownSwaggerSpecification
 );
 
 export { swagger, swaggerSpecification };

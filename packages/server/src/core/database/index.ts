@@ -1,12 +1,12 @@
 import { DataSource } from 'typeorm';
 
-import { Movie, Prompt, Summary, Transcription } from '../../entities';
+import { Markdown, Movie, Prompt, Summary, Transcription } from '../../entities';
 import { DATABASE_SERVICE_HOST, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER } from '../env';
 import logger from '../logger';
 
 export const dataSource = new DataSource({
   database: POSTGRES_DB,
-  entities: [Movie, Transcription, Prompt, Summary],
+  entities: [Movie, Transcription, Prompt, Summary, Markdown],
   host: DATABASE_SERVICE_HOST,
   logging: false,
   password: POSTGRES_PASSWORD,
