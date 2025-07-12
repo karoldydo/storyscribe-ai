@@ -8,8 +8,17 @@ import logger from './core/logger';
 import { corsMiddleware, csrfMiddleware, helmetMiddleware } from './core/middlewares';
 import { initializeCsrf } from './core/security/csrf';
 import { swagger, swaggerSpecification } from './core/swagger';
-import { markdownRouter, movieRouter, promptRouter, summaryRouter, transcriptionRouter } from './routes';
+import {
+  markdownRouter,
+  movieRouter,
+  pdfRouter,
+  promptRouter,
+  styleRouter,
+  summaryRouter,
+  transcriptionRouter,
+} from './routes';
 import { markdownWorker, summaryWorker, transcriptionWorker } from './workers';
+import { pdfWorker } from './workers/pdf.worker';
 
 dotevnv.config();
 
@@ -36,11 +45,14 @@ server.use('/api/v1/transcribe', transcriptionRouter);
 server.use('/api/v1/prompt', promptRouter);
 server.use('/api/v1/summary', summaryRouter);
 server.use('/api/v1/markdown', markdownRouter);
+server.use('/api/v1/style', styleRouter);
+server.use('/api/v1/pdf', pdfRouter);
 
 server.listen(PORT, async () => {
   await databaseConnection();
   transcriptionWorker();
   summaryWorker();
   markdownWorker();
+  pdfWorker();
   logger.info(`Server is listening on port ${PORT}`);
 });

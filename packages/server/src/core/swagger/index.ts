@@ -1,7 +1,9 @@
 import {
   markdownSwaggerSpecification,
   movieSwaggerSpecification,
+  pdfSwaggerSpecification,
   promptSwaggerSpecification,
+  styleSwaggerSpecification,
   summarySwaggerSpecification,
   transcriptionSwaggerSpecification,
 } from '@storyscribe-ai/model/documents';
@@ -14,7 +16,9 @@ const swaggerSpecification = merge(
   transcriptionSwaggerSpecification,
   promptSwaggerSpecification,
   summarySwaggerSpecification,
-  markdownSwaggerSpecification
+  markdownSwaggerSpecification,
+  styleSwaggerSpecification,
+  pdfSwaggerSpecification
 );
 
 export { swagger, swaggerSpecification };

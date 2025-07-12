@@ -2,7 +2,7 @@ import { TranscriptionServiceRequest, TranscriptionServiceResponse } from '@stor
 import { AxiosResponse } from 'axios';
 import { Worker } from 'bullmq';
 
-import { whisperService } from '../core/axios';
+import { whisperExternalService } from '../core/axios';
 import logger from '../core/logger';
 import { redisOptions } from '../core/redis';
 import { MovieService, TranscriptionService } from '../services';
@@ -23,7 +23,7 @@ const transcriptionWorker = () => {
 
         const {
           data: { transcript: content },
-        } = await whisperService.post<
+        } = await whisperExternalService.post<
           TranscriptionServiceResponse,
           AxiosResponse<TranscriptionServiceResponse>,
           TranscriptionServiceRequest

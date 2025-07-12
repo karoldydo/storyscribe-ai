@@ -4,10 +4,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Pdf } from './pdf';
 import { Prompt } from './prompt';
 import { Summary } from './summary';
 
@@ -51,6 +53,9 @@ export class Markdown implements IMarkdown {
 
   @Column({ enum: ['completed', 'failed', 'in-progress', 'pending'], nullable: false, type: 'enum' })
   status!: 'completed' | 'failed' | 'in-progress' | 'pending';
+
+  @OneToMany(() => Pdf, (pdf) => pdf.markdown)
+  pdfs!: Pdf[];
 
   @CreateDateColumn({ nullable: false, type: 'timestamp with time zone' })
   created!: Date;

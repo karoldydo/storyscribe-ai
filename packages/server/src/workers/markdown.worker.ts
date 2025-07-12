@@ -2,7 +2,7 @@ import { OllamaServiceRequest, OllamaServiceResponse } from '@storyscribe-ai/mod
 import { AxiosResponse } from 'axios';
 import { Worker } from 'bullmq';
 
-import { ollamaService } from '../core/axios';
+import { ollamaExternalService } from '../core/axios';
 import logger from '../core/logger';
 import { redisOptions } from '../core/redis';
 import { MarkdownService, PromptService, SummaryService } from '../services';
@@ -26,14 +26,15 @@ const markdownWorker = () => {
 
         const {
           data: { response: content },
-        } = await ollamaService.post<OllamaServiceResponse, AxiosResponse<OllamaServiceResponse>, OllamaServiceRequest>(
-          '/api/generate',
-          {
-            model: 'llama:latest',
-            prompt: `${prompt.trim()}\n\n${summary.trim()}`,
-            stream: false,
-          }
-        );
+        } = await ollamaExternalService.post<
+          OllamaServiceResponse,
+          AxiosResponse<OllamaServiceResponse>,
+          OllamaServiceRequest
+        >('/api/generate', {
+          model: 'llama:latest',
+          prompt: `${prompt.trim()}\n\n${summary.trim()}`,
+          stream: false,
+        });
 
         await markdownService.update({ content, id });
       }

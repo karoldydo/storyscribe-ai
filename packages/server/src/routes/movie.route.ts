@@ -20,7 +20,7 @@ router
       }
       const { filename, mimetype, size } = request.file;
       const movie = await movieService.create({ filename, mimetype, size });
-      response.status(StatusCodes.CREATED).json(movie);
+      response.status(StatusCodes.ACCEPTED).json(movie);
     })
   )
   .get(
